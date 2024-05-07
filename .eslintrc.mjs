@@ -1,5 +1,6 @@
-module.exports = {
+export default {
     "env": {
+        "root": true,
         "browser": true,
         "es2021": true
     },
@@ -33,10 +34,7 @@ module.exports = {
             "error",
             4
         ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
+        "linebreak-style": ["error", process.platform === "win32" ? "windows" : "unix"],
         "quotes": [
             "error",
             "double"
@@ -44,6 +42,7 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "@typescript-eslint/no-var-requires": "error"
     }
 };
