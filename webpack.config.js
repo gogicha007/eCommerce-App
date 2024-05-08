@@ -12,6 +12,10 @@ const baseConfig = {
     module: {
         rules: [
             {
+                test: /\.html$/i,
+                loader: "html-loader",
+              },
+            {
                 test: /\.css$/i,
                 use: [
                     { loader: "style-loader" },
