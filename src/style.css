@@ -1,0 +1,22 @@
+.entryPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 500px;
+    justify-content: center;
+}
+
+.form_content{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title-game{
+    padding-bottom: 50px;
+    font-size: 25px;
+}
+
+form{
+    width: 250px;
+}
