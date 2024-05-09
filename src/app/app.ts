@@ -9,8 +9,6 @@ export default class App {
   constructor() {
     const routes = this.createView();
     this.routing = new Router(routes);
-
-
   }
 
   loadEntryPage() {
