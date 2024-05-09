@@ -4,5 +4,4 @@ import "./style.css";
 
 const app = new App();
 
-
 app.loadEntryPage();

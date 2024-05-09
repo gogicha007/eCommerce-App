@@ -41,7 +41,7 @@ export default {
         ],
         "semi": [
             "error",
-            "always"
+            "always",
         ],
         "@typescript-eslint/no-var-requires": "error"
     }
