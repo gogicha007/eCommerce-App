@@ -4,12 +4,11 @@ import Router from "../../util/router";
 import Form from "./form/form";
 
 export default class LoginPage extends ElementCreator {
-  constructor(routing: Router ) {
+  constructor(routing: Router) {
     super(
       { tag: "div", className: "entryPage" },
       div({ className: "title-game", textContent: "E-Commerce" }),
       new Form(routing),
     );
-
   }
 }

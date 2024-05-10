@@ -10,7 +10,6 @@ export const ul = (
   ...childs: (ElementCreator | HTMLElement | null)[]
 ) => new ElementCreator<HTMLDivElement>({ tag: "ul", ...props }, ...childs);
 
-
 export const label = (
   props: ParamsTags,
   ...childs: (ElementCreator | HTMLElement | null)[]

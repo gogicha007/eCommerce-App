@@ -1,5 +1,5 @@
-import ElementCreator from '../../../util/elementCreator';
-import Router from '../../../util/router';
+import ElementCreator from "../../../util/elementCreator";
+import Router from "../../../util/router";
 interface inputData {
     name: FormDataEntryValue | null | void;
     surname: FormDataEntryValue | null | void;

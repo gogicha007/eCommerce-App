@@ -30,15 +30,12 @@ export default {
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/quotes": "off",
         "indent": [
             "error",
             4
         ],
         "linebreak-style": ["error", process.platform === "win32" ? "windows" : "unix"],
-        "quotes": [
-            "error",
-            "double"
-        ],
         "semi": [
             "error",
             "always"
