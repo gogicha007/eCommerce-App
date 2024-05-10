@@ -22,9 +22,9 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       'userEmail',
       '',
       '',
-      'E-mail',
-      'email',
-      'Please enter valid email',
+      '',
+      '',
+      '',
       styles.input__login,
     );
     const loginWrapper = new InputWrapper(
