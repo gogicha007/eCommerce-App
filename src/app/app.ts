@@ -1,7 +1,7 @@
-import ElementCreator from "./util/elementCreator";
-import Router from "./util/router";
-import LoginPage from "./view/loginPage/loginView";
-import StartPage from "./view/mainPage/mainView";
+import ElementCreator from './util/elementCreator';
+import Router from './util/router';
+import LoginPage from './view/loginPage/loginView';
+import StartPage from './view/mainPage/mainView';
 
 export default class App {
   routing: Router;
@@ -12,19 +12,19 @@ export default class App {
   }
 
   loadEntryPage() {
-    this.routing.navigate("login-page");
+    this.routing.navigate('login-page');
   }
 
   createView() {
     return [
       {
-        path: "login-page",
+        path: 'login-page',
         callback: () => {
           App.addContent(new LoginPage(this.routing));
         },
       },
       {
-        path: "main-page",
+        path: 'main-page',
         callback: () => {
           App.addContent(new StartPage(this.routing));
         },
@@ -33,7 +33,7 @@ export default class App {
   }
 
   static addContent(content: ElementCreator) {
-    document.body.innerHTML = "";
+    document.body.innerHTML = '';
     document.body.append(content.getElement());
   }
 }
