@@ -44,6 +44,16 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       styles["input__password"],
     );
 
+    const passwordWrapper = new InputWrapper(
+      {
+        inputSelector: styles["input__password"],
+        placeHolder: "",
+        type: "password",
+        errSelector: styles["login-error"],
+        errMessage: "Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters",
+      },
+      inputPassword.getElement(),
+    )
     const inputBtn = input(
       "",
       "",
@@ -57,7 +67,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     super(
       { tag: "form", className: styles["login__form"] },
       loginWrapper.getNode(),
-      inputPassword,
+      passwordWrapper.getNode(),
       inputBtn,
     );
 
@@ -67,7 +77,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     };
 
     this.loginInput = loginWrapper;
-    this.passwordInput = loginWrapper;
+    this.passwordInput = passwordWrapper;
     this.routing = routing;
 
     const handler = this.submitHandler.bind(this);
@@ -83,7 +93,9 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     event.preventDefault();
     this.setData();
     this.saveData();
-    this.validateFillForm();
+    if (this.validateFillForm()) {
+      this.routing.navigate("main-page");
+    };
   }
 
   setData() {
@@ -93,13 +105,30 @@ export default class Form extends ElementCreator<HTMLFormElement> {
   }
 
   validateFillForm() {
-    console.log(this.loginInput);
+    console.log(this.loginInput)
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const passRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,}$/;
-    if (emailRegx.test(this.inputData.email as string)) console.log("true");
-    if (this.inputData.email !== "" && this.inputData.password !== "") {
-      this.routing.navigate("main-page");
-    }
+    let valid = true;
+        if (!emailRegx.test(this.loginInput.inputField.value)) {
+            setErrorFor(this.loginInput);
+            valid = false;
+        } else {
+            this.loginInput.errorElement.classList.remove(styles["show"]);
+        }
+        if (!passRegx.test(this.passwordInput.inputField.value)) {
+            setErrorFor(this.passwordInput);
+            valid = false;
+        } else {
+            this.passwordInput.errorElement.classList.remove(styles["show"]);
+        }
+
+        function setErrorFor(inputEl: InputWrapper) {
+            inputEl.errorElement.classList.add(styles["show"]);
+        }
+        return valid;
+    // if (this.inputData.email !== "" && this.inputData.password !== "") {
+    //   this.routing.navigate("main-page");
+    // }
   }
 
   saveData() {
