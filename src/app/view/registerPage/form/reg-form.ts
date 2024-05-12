@@ -1,4 +1,4 @@
-import styles from './form.module.css';
+import styles from './reg-form.module.css';
 import { input } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import Router from '../../../util/router';

@@ -60,11 +60,17 @@ export default class Form extends ElementCreator<HTMLFormElement> {
 
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
-    const signUpQuest = document.createElement('h3');
-    signUpQuest.textContent = "'Don't have an account ?";
     const signUpAnchor = document.createElement('a');
-    signUpAnchor.href = '#'
-    const signUp = div({ className: styles['sign-up'] }, signUpQuest, signUpAnchor);
+    signUpAnchor.textContent = 'Register';
+    signUpAnchor.href = '#register-page';
+    signUpAnchor.onclick = (e) => {
+      e.preventDefault();
+      this.routing.navigate('register-page');
+    };
+    const signUp = div(
+      { className: styles['sign-up'], textContent: "Don't have an account?" },
+      signUpAnchor,
+    );
 
     super(
       { tag: 'form', className: styles.login__form },
