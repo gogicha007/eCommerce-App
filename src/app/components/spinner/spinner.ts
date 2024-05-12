@@ -1,25 +1,27 @@
-import styles from "./spinner.module.css";
+import styles from './spinner.module.css';
 
 class Spinner {
-    node: HTMLDivElement;
-    constructor() {
-        const spinner = document.createElement("div");
-        spinner.classList.add(styles["spinner"]);
-        spinner.style.display = "none";
+  node: HTMLDivElement;
 
-        this.node = spinner;
-    }
+  constructor() {
+    const spinner = document.createElement('div');
+    spinner.classList.add(styles.spinner);
+    spinner.style.display = 'none';
 
-    public show() {
-        this.node.style.display = "block";
-    }
+    this.node = spinner;
+  }
 
-    public hide() {
-        this.node.style.display = "none";
-    }
-    public getNode() {
-        return this.node;
-    }
+  public show() {
+    this.node.style.display = 'block';
+  }
+
+  public hide() {
+    this.node.style.display = 'none';
+  }
+
+  public getNode() {
+    return this.node;
+  }
 }
 
 export default Spinner;

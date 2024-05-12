@@ -37,4 +37,4 @@ class AlertModal {
   }
 }
 
-export default AlertModal
+export default AlertModal;

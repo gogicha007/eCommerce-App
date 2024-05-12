@@ -84,7 +84,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
 
   private async submitHandler(event: Event) {
     event.preventDefault();
-    this.spinner.show()
+    this.spinner.show();
     this.setData();
     this.saveData();
     if (this.validateFillForm()) {
@@ -92,7 +92,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
         login: this.loginInput.inputField.value,
         password: this.passwordInput.inputField.value,
       });
-      this.spinner.hide()
+      this.spinner.hide();
       if (res.status === 200) {
         const credentials = await res.json();
         console.log(credentials.access_token);
