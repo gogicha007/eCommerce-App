@@ -6,6 +6,8 @@ import InputWrapper from '../../../components/input-wrapper';
 import { getTokensByPass } from '../../../services/ct-requests';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import Spinner from '../../../components/spinner/spinner';
+import SessionStorage from '../../../services/session-storage';
+import API_KEYS from '../../../services/ct-constants';
 
 interface InputData {
   email: FormDataEntryValue | null | void;
@@ -95,7 +97,19 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       this.spinner.hide();
       if (res.status === 200) {
         const credentials = await res.json();
-        console.log(credentials.access_token);
+        const userData = {
+          login: this.loginInput.inputField.value,
+          password: this.passwordInput.inputField.value,
+          isLogged: true,
+        };
+        const tokens = {
+          access_token: credentials.access_token,
+          token_expires_in: credentials.expires_in,
+          refresh_token: credentials.refresh_token,
+        };
+        const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
+        session.saveData(userData);
+        session.setTokens(tokens);
         this.routing.navigate('main-page');
       } else {
         this.alertModal.getNode().showModal();
