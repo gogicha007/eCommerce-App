@@ -1,9 +1,10 @@
-import ElementCreator from './util/elementCreator';
-import Router from './util/router';
-import LoginPage from './view/loginPage/loginView';
-import StartPage from './view/mainPage/mainView';
-import SessionStorage from './services/session-storage';
 import API_KEYS from './services/ct-constants';
+import ElementCreator from './util/elementCreator';
+import LoginPage from './view/loginPage/loginView';
+import RegisterPage from './view/registerPage/retisterView';
+import Router from './util/router';
+import SessionStorage from './services/session-storage';
+import StartPage from './view/mainPage/mainView';
 
 export default class App {
   routing: Router;
@@ -36,6 +37,12 @@ export default class App {
         path: 'main-page',
         callback: () => {
           App.addContent(new StartPage(this.routing));
+        },
+      },
+      {
+        path: 'register-page',
+        callback: () => {
+          App.addContent(new RegisterPage(this.routing));
         },
       },
     ];

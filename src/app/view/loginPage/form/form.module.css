@@ -53,3 +53,13 @@
 .show {
     visibility: visible;
 }
+
+.sign-up {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    aling-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    font-size: 12px;
+}
