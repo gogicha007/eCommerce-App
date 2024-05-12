@@ -1,3 +1,4 @@
+import styles from './main.module.css';
 import button from '../../components/button';
 import { div } from '../../components/tags';
 import ElementCreator from '../../util/elementCreator';
@@ -11,7 +12,7 @@ export default class StartPage extends ElementCreator {
   constructor(routing: Router) {
     super(
       { tag: 'div', className: 'startPage' },
-      div({ className: 'title-game', textContent: 'E-COMM' }),
+      div({ className: styles.main__title, textContent: 'E-COMM' }),
       button({
         txt: 'Log Out',
         onClick: () => {

@@ -1,5 +1,5 @@
 import styles from './form.module.css';
-import { input, div } from '../../../components/tags';
+import { input } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import Router from '../../../util/router';
 import InputWrapper from '../../../components/input-wrapper';
@@ -9,17 +9,16 @@ import Spinner from '../../../components/spinner/spinner';
 import SessionStorage from '../../../services/session-storage';
 import API_KEYS from '../../../services/ct-constants';
 
-interface InputData {
-  email: FormDataEntryValue | null | void;
-  password: FormDataEntryValue | null | void;
-}
+export default class RegForm extends ElementCreator<HTMLFormElement> {
+  addressInput: InputWrapper;
 
-export default class Form extends ElementCreator<HTMLFormElement> {
   alertModal: AlertModal;
 
-  inputData: InputData;
+  emailInput: InputWrapper;
 
-  loginInput: InputWrapper;
+  firstNameInpput: InputWrapper;
+
+  lastNameInput: InputWrapper;
 
   passwordInput: InputWrapper;
 
@@ -31,13 +30,52 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     const alertModal = new AlertModal();
     const spinner = new Spinner();
 
-    const loginWrapper = new InputWrapper({
+    const addressInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      name: 'userAddress',
+      pattern: '',
+      minLength: 6,
+      placeHolder: 'Address...',
+      type: 'text',
+      title: '',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const emailInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__login,
       name: 'userEmail',
       pattern: '',
       minLength: 6,
       placeHolder: 'Email...',
+      type: 'email',
+      title: '',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const firstNameInpput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__fname,
+      name: 'userEmail',
+      pattern: '',
+      minLength: 2,
+      placeHolder: 'First Name...',
+      type: 'email',
+      title: '',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const lastNameInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__lname,
+      name: 'userFirstName',
+      pattern: '',
+      minLength: 2,
+      placeHolder: 'Last Name...',
       type: 'email',
       title: '',
       errSelector: styles['login-error'],
@@ -60,29 +98,20 @@ export default class Form extends ElementCreator<HTMLFormElement> {
 
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
-    const signUpQuest = document.createElement('h3');
-    signUpQuest.textContent = "'Don't have an account ?";
-    const signUpAnchor = document.createElement('a');
-    signUpAnchor.href = '#'
-    const signUp = div({ className: styles['sign-up'] }, signUpQuest, signUpAnchor);
-
     super(
       { tag: 'form', className: styles.login__form },
-      loginWrapper.getNode(),
+      emailInput.getNode(),
       passwordWrapper.getNode(),
       inputBtn,
-      signUp,
       alertModal.getNode(),
       spinner.getNode(),
     );
 
-    this.inputData = {
-      email: '',
-      password: '',
-    };
-
+    this.addressInput = addressInput;
     this.alertModal = alertModal;
-    this.loginInput = loginWrapper;
+    this.emailInput = emailInput;
+    this.firstNameInpput = firstNameInpput;
+    this.lastNameInput = lastNameInput;
     this.passwordInput = passwordWrapper;
     this.routing = routing;
     this.spinner = spinner;
@@ -94,18 +123,16 @@ export default class Form extends ElementCreator<HTMLFormElement> {
   private async submitHandler(event: Event) {
     event.preventDefault();
     this.spinner.show();
-    this.setData();
-    this.saveData();
     if (this.validateFillForm()) {
       const res = await getTokensByPass({
-        login: this.loginInput.inputField.value,
+        login: this.emailInput.inputField.value,
         password: this.passwordInput.inputField.value,
       });
       this.spinner.hide();
       if (res.status === 200) {
         const credentials = await res.json();
         const userData = {
-          login: this.loginInput.inputField.value,
+          login: this.emailInput.inputField.value,
           password: this.passwordInput.inputField.value,
           isLogged: true,
         };
@@ -127,12 +154,6 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     }
   }
 
-  setData() {
-    const data = new FormData(this.getElement());
-    this.inputData.email = data.get('userEmail');
-    this.inputData.password = data.get('userPassword');
-  }
-
   validateFillForm() {
     function setErrorFor(inputEl: InputWrapper) {
       inputEl.errorElement.classList.add(styles.show);
@@ -140,11 +161,11 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const passRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,}$/;
     let valid = true;
-    if (!emailRegx.test(this.loginInput.inputField.value)) {
-      setErrorFor(this.loginInput);
+    if (!emailRegx.test(this.emailInput.inputField.value)) {
+      setErrorFor(this.emailInput);
       valid = false;
     } else {
-      this.loginInput.errorElement.classList.remove(styles.show);
+      this.emailInput.errorElement.classList.remove(styles.show);
     }
     if (!passRegx.test(this.passwordInput.inputField.value)) {
       setErrorFor(this.passwordInput);
@@ -154,9 +175,5 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     }
 
     return valid;
-  }
-
-  saveData() {
-    window.localStorage.setItem('logData', JSON.stringify(this.inputData));
   }
 }
