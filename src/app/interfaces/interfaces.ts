@@ -21,11 +21,11 @@ export interface ITFUser {
 }
 
 export interface ITFSessionData {
-  login: string;
-  password: string;
+  login?: string;
+  password?: string;
   isLogged?: boolean;
   access_token?: string;
   refresh_token?: string;
-  token_date?: number;
+  token_start?: number;
   token_expires_in?: number;
 }

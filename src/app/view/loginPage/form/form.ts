@@ -5,6 +5,9 @@ import Router from '../../../util/router';
 import InputWrapper from '../../../components/input-wrapper';
 import { getTokensByPass } from '../../../services/ct-requests';
 import AlertModal from '../../../components/alert-modal/alert-modal';
+import Spinner from '../../../components/spinner/spinner';
+import SessionStorage from '../../../services/session-storage';
+import API_KEYS from '../../../services/ct-constants';
 
 interface InputData {
   email: FormDataEntryValue | null | void;
@@ -22,8 +25,11 @@ export default class Form extends ElementCreator<HTMLFormElement> {
 
   routing: Router;
 
+  spinner: Spinner;
+
   constructor(routing: Router) {
     const alertModal = new AlertModal();
+    const spinner = new Spinner();
 
     const loginWrapper = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
@@ -51,6 +57,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       errMessage:
         'Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters',
     });
+
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
     super(
@@ -59,6 +66,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       passwordWrapper.getNode(),
       inputBtn,
       alertModal.getNode(),
+      spinner.getNode(),
     );
 
     this.inputData = {
@@ -70,6 +78,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     this.loginInput = loginWrapper;
     this.passwordInput = passwordWrapper;
     this.routing = routing;
+    this.spinner = spinner;
 
     const handler = this.submitHandler.bind(this);
     this.element.addEventListener('submit', handler);
@@ -77,6 +86,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
 
   private async submitHandler(event: Event) {
     event.preventDefault();
+    this.spinner.show();
     this.setData();
     this.saveData();
     if (this.validateFillForm()) {
@@ -84,9 +94,22 @@ export default class Form extends ElementCreator<HTMLFormElement> {
         login: this.loginInput.inputField.value,
         password: this.passwordInput.inputField.value,
       });
+      this.spinner.hide();
       if (res.status === 200) {
         const credentials = await res.json();
-        console.log(credentials.access_token);
+        const userData = {
+          login: this.loginInput.inputField.value,
+          password: this.passwordInput.inputField.value,
+          isLogged: true,
+        };
+        const tokens = {
+          access_token: credentials.access_token,
+          token_expires_in: credentials.expires_in,
+          refresh_token: credentials.refresh_token,
+        };
+        const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
+        session.saveData(userData);
+        session.setTokens(tokens);
         this.routing.navigate('main-page');
       } else {
         this.alertModal.getNode().showModal();

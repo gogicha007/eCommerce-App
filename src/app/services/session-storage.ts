@@ -1,4 +1,4 @@
-import { ITFUser, ITFSessionData } from '../interfaces/interfaces';
+import { ITFSessionData } from '../interfaces/interfaces';
 
 class SessionStorage {
   private storageKey: string;
@@ -7,12 +7,8 @@ class SessionStorage {
     this.storageKey = key;
   }
 
-  public key(): string {
-    return this.storageKey;
-  }
-
-  public getUser(key: string): string {
-    const data = this.getData(key) || '';
+  public getUser(): string {
+    const data = this.getData() || '';
     return `${data.login || null} ${data.password || null} ${data.isLogged || null}`;
   }
 
@@ -21,46 +17,23 @@ class SessionStorage {
     return data.login;
   }
 
-  public getPassword() {
-    const data = JSON.parse(sessionStorage.getItem(this.storageKey) as string);
-    return data.password;
-  }
-
   public isLogged() {
-    const data = JSON.parse(sessionStorage.getItem(this.storageKey) as string);
+    const data = this.getData();
     return data ? data.isLogged : null;
   }
 
-  public setUser(data: ITFSessionData) {
-    const storedData = this.getData();
-    if (storedData) {
-      storedData.login = data.login;
-      storedData.password = data.password;
-      sessionStorage.setItem(this.storageKey, JSON.stringify(storedData));
-    } else {
-      const newData = data;
-      newData.isLogged = false;
-      sessionStorage.setItem(this.storageKey, JSON.stringify(newData));
-    }
-  }
-
-  public setTokens(token: ITFUser) {
+  public setTokens(token: ITFSessionData) {
     const storageData = this.getData();
     if (storageData) {
-      storageData.access_token = token.access_token;
-      storageData.token_expires_in = token.expires_in;
-      storageData.refresh_token = token.refresh_token;
-      storageData.token_date = Date.now();
+      storageData.access_token = token.access_token as string;
+      storageData.token_expires_in = token.token_expires_in as number;
+      storageData.refresh_token = token.refresh_token as string;
+      storageData.token_start = Date.now();
+      sessionStorage.setItem(this.storageKey, JSON.stringify(storageData));
     }
   }
 
-  public saveData(data: ITFUser): void {
-    sessionStorage.setItem(this.storageKey, JSON.stringify(data));
-  }
-
-  public setLogged(bool: boolean) {
-    const data = JSON.parse(sessionStorage.getItem(this.storageKey) as string);
-    data.isLogged = bool;
+  public saveData(data: ITFSessionData): void {
     sessionStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 
@@ -72,7 +45,7 @@ class SessionStorage {
     sessionStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 
-  public getData(key = this.storageKey): ITFUser {
+  public getData(key = this.storageKey): ITFSessionData {
     const data = sessionStorage.getItem(key);
     return data ? JSON.parse(data) : null;
   }
