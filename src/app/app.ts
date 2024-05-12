@@ -2,6 +2,8 @@ import ElementCreator from './util/elementCreator';
 import Router from './util/router';
 import LoginPage from './view/loginPage/loginView';
 import StartPage from './view/mainPage/mainView';
+import SessionStorage from './services/session-storage';
+import API_KEYS from './services/ct-constants';
 
 export default class App {
   routing: Router;
@@ -12,7 +14,14 @@ export default class App {
   }
 
   loadEntryPage() {
-    this.routing.navigate('login-page');
+    const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID)
+    if (session.isLogged()) {
+      console.log('is logged')
+      this.routing.navigate('main-page');
+    } else {
+      console.log('not logged')
+      this.routing.navigate('login-page');
+    }
   }
 
   createView() {
