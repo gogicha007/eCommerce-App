@@ -1,10 +1,9 @@
 import styles from './reg-form.module.css';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import API_KEYS from '../../../services/ct-constants';
-import { div } from '../../../components/tags';
+import { div, input } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { getTokensByPass } from '../../../services/ct-requests';
-import { input } from '../../../components/tags';
 import InputWrapper from '../../../components/input-wrapper';
 import Router from '../../../util/router';
 import SessionStorage from '../../../services/session-storage';
@@ -107,7 +106,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       this.routing.navigate('login-page');
     };
     const loginLink = div(
-      { className: styles['login-link'], textContent: "Have an account?" },
+      { className: styles['login-link'], textContent: 'Have an account?' },
       loginAnchor,
     );
 
