@@ -14,12 +14,12 @@ export default class App {
   }
 
   loadEntryPage() {
-    const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID)
+    const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
     if (session.isLogged()) {
-      console.log('is logged')
+      console.log('is logged');
       this.routing.navigate('main-page');
     } else {
-      console.log('not logged')
+      console.log('not logged');
       this.routing.navigate('login-page');
     }
   }
