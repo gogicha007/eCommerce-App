@@ -15,7 +15,10 @@
 }
 
 .input__login,
-.input__password {
+.input__password,
+.input__fname,
+.input__lname,
+.input__address {
     padding: 5px;
     height: 40px;
     width: 100%;

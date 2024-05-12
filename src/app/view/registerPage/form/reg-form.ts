@@ -56,7 +56,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       errMessage: 'Enter valid email...',
     });
 
-    const firstNameInpput = new InputWrapper({
+    const firstNameInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__fname,
       name: 'userEmail',
@@ -112,6 +112,8 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
     super(
       { tag: 'form', className: styles.register__form },
+      firstNameInput.getNode(),
+      lastNameInput.getNode(),
       emailInput.getNode(),
       passwordWrapper.getNode(),
       inputBtn,
@@ -123,7 +125,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     this.addressInput = addressInput;
     this.alertModal = alertModal;
     this.emailInput = emailInput;
-    this.firstNameInpput = firstNameInpput;
+    this.firstNameInpput = firstNameInput;
     this.lastNameInput = lastNameInput;
     this.passwordInput = passwordWrapper;
     this.routing = routing;
