@@ -4,6 +4,7 @@ import ElementCreator from '../../../util/elementCreator';
 import Router from '../../../util/router';
 import InputWrapper from '../../../components/input-wrapper';
 import { getTokensByPass } from '../../../services/ct-requests';
+import AlertModal from '../../../components/alert-modal/alert-modal';
 
 interface InputData {
   email: FormDataEntryValue | null | void;
@@ -11,15 +12,19 @@ interface InputData {
 }
 
 export default class Form extends ElementCreator<HTMLFormElement> {
+  alertModal: AlertModal;
+
+  inputData: InputData;
+
   loginInput: InputWrapper;
 
   passwordInput: InputWrapper;
 
   routing: Router;
 
-  inputData: InputData;
-
   constructor(routing: Router) {
+    const alertModal = new AlertModal();
+
     const loginWrapper = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__login,
@@ -53,6 +58,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       loginWrapper.getNode(),
       passwordWrapper.getNode(),
       inputBtn,
+      alertModal.getNode(),
     );
 
     this.inputData = {
@@ -60,6 +66,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       password: '',
     };
 
+    this.alertModal = alertModal;
     this.loginInput = loginWrapper;
     this.passwordInput = passwordWrapper;
     this.routing = routing;
@@ -80,13 +87,14 @@ export default class Form extends ElementCreator<HTMLFormElement> {
       if (res.status === 200) {
         const credentials = await res.json();
         console.log(credentials.access_token);
+        this.routing.navigate('main-page');
       } else {
-        console.log('please enter valid credentials');
+        this.alertModal.getNode().showModal();
+        this.alertModal.updateModal(
+          'Please enter correct email and/or password',
+        );
       }
     }
-    // if (this.validateFillForm()) {
-    //   this.routing.navigate('main-page');
-    // }
   }
 
   setData() {
