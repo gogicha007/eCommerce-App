@@ -12,7 +12,7 @@ export const getTokensByPass = async (data: ITFLoginData) => {
       },
     },
   );
-  return response.json();
+  return response;
 };
 
 export default getTokensByPass;

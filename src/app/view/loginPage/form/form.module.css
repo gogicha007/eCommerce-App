@@ -18,6 +18,7 @@
 .input__password {
     padding: 5px;
     height: 40px;
+    width: 100%;
     border-radius: 7px;
     border: 1px solid var(--accent-color);
     font-size: 14px;

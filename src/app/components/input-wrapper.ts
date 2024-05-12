@@ -1,4 +1,5 @@
-import { InputProps } from '../interfaces/interfaces';
+import { ITFInputProps } from '../interfaces/interfaces';
+import { input } from './tags';
 
 export default class InputWrapper {
   node: HTMLElement;
@@ -7,27 +8,31 @@ export default class InputWrapper {
 
   errorElement: HTMLElement;
 
-  props: InputProps;
+  props: ITFInputProps;
 
-  constructor(props: InputProps, loginInput: HTMLInputElement) {
+  constructor(props: ITFInputProps) {
     const node = document.createElement('div');
     node.classList.add(props.inputWrapperSelector as string);
-    const input = loginInput;
-    input.classList.add(props.inputSelector);
-    input.type = props.type;
-    input.placeholder = props.placeHolder;
-    input.minLength = props.minLength as number;
-    input.required = true;
+    const inputField = input(
+      props.name as string,
+      props.pattern as string,
+      (props.minLength as number).toString(),
+      props.placeHolder,
+      props.type,
+      props.title as string,
+      props.inputSelector,
+    );
+    inputField.getElement().required = true;
 
     const errorElement = document.createElement('small');
     errorElement.classList.add(props.errSelector);
     errorElement.innerText = props.errMessage;
 
-    node.appendChild(input);
+    node.appendChild(inputField.getElement());
     node.appendChild(errorElement);
 
     this.errorElement = errorElement;
-    this.inputField = input;
+    this.inputField = inputField.getElement();
     this.node = node;
     this.props = props;
   }

@@ -9,6 +9,7 @@ interface InputData {
   email: FormDataEntryValue | null | void;
   password: FormDataEntryValue | null | void;
 }
+
 export default class Form extends ElementCreator<HTMLFormElement> {
   loginInput: InputWrapper;
 
@@ -19,48 +20,32 @@ export default class Form extends ElementCreator<HTMLFormElement> {
   inputData: InputData;
 
   constructor(routing: Router) {
-    const inputLogin = input(
-      'userEmail',
-      '',
-      '',
-      '',
-      '',
-      '',
-      styles.input__login,
-    );
-    const loginWrapper = new InputWrapper(
-      {
-        inputWrapperSelector: styles.input__wrapper,
-        inputSelector: styles.input__login,
-        placeHolder: 'Email...',
-        type: 'email',
-        errSelector: styles['login-error'],
-        errMessage: 'Enter valid email...',
-      },
-      inputLogin.getElement(),
-    );
+    const loginWrapper = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__login,
+      name: 'userEmail',
+      pattern: '',
+      minLength: 6,
+      placeHolder: 'Email...',
+      type: 'email',
+      title: '',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
 
-    const inputPassword = input(
-      'userPassword',
-      '',
-      '',
-      'Password',
-      'password',
-      'Only english, first word uppercase, min 4 char',
-      styles.input__password,
-    );
-
-    const passwordWrapper = new InputWrapper(
-      {
-        inputSelector: styles.input__password,
-        placeHolder: '',
-        type: 'password',
-        errSelector: styles['login-error'],
-        errMessage:
-          'Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters',
-      },
-      inputPassword.getElement(),
-    );
+    const passwordWrapper = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__password,
+      name: 'userPassword',
+      pattern: '',
+      minLength: 8,
+      placeHolder: '',
+      type: 'password',
+      title: '',
+      errSelector: styles['login-error'],
+      errMessage:
+        'Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters',
+    });
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
     super(
@@ -87,11 +72,18 @@ export default class Form extends ElementCreator<HTMLFormElement> {
     event.preventDefault();
     this.setData();
     this.saveData();
-    const credentials = await getTokensByPass({
-      login: this.loginInput.inputField.value,
-      password: this.passwordInput.inputField.value,
-    });
-    console.log(credentials);
+    if (this.validateFillForm()) {
+      const res = await getTokensByPass({
+        login: this.loginInput.inputField.value,
+        password: this.passwordInput.inputField.value,
+      });
+      if (res.status === 200) {
+        const credentials = await res.json();
+        console.log(credentials.access_token);
+      } else {
+        console.log('please enter valid credentials');
+      }
+    }
     // if (this.validateFillForm()) {
     //   this.routing.navigate('main-page');
     // }
