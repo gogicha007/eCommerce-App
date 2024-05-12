@@ -13,7 +13,7 @@ export default class RegisterPage extends ElementCreator {
       { tag: 'div', className: styles['register-page'] },
       div({
         className: styles['register-page__title'],
-        textContent: 'Register a User',
+        textContent: 'Register a new User',
       }),
       new RegForm(routing),
     );

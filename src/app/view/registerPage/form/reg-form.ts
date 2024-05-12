@@ -1,13 +1,14 @@
 import styles from './reg-form.module.css';
-import { input } from '../../../components/tags';
-import ElementCreator from '../../../util/elementCreator';
-import Router from '../../../util/router';
-import InputWrapper from '../../../components/input-wrapper';
-import { getTokensByPass } from '../../../services/ct-requests';
 import AlertModal from '../../../components/alert-modal/alert-modal';
-import Spinner from '../../../components/spinner/spinner';
-import SessionStorage from '../../../services/session-storage';
 import API_KEYS from '../../../services/ct-constants';
+import { div } from '../../../components/tags';
+import ElementCreator from '../../../util/elementCreator';
+import { getTokensByPass } from '../../../services/ct-requests';
+import { input } from '../../../components/tags';
+import InputWrapper from '../../../components/input-wrapper';
+import Router from '../../../util/router';
+import SessionStorage from '../../../services/session-storage';
+import Spinner from '../../../components/spinner/spinner';
 
 export default class RegForm extends ElementCreator<HTMLFormElement> {
   addressInput: InputWrapper;
@@ -98,11 +99,24 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
+    const loginAnchor = document.createElement('a');
+    loginAnchor.textContent = 'Log In';
+    loginAnchor.href = '#login-page';
+    loginAnchor.onclick = (e) => {
+      e.preventDefault();
+      this.routing.navigate('login-page');
+    };
+    const loginLink = div(
+      { className: styles['login-link'], textContent: "Have an account?" },
+      loginAnchor,
+    );
+
     super(
-      { tag: 'form', className: styles.login__form },
+      { tag: 'form', className: styles.register__form },
       emailInput.getNode(),
       passwordWrapper.getNode(),
       inputBtn,
+      loginLink,
       alertModal.getNode(),
       spinner.getNode(),
     );
