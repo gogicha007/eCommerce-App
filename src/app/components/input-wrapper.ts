@@ -1,5 +1,5 @@
 import { ITFInputProps } from '../interfaces/interfaces';
-import { input } from './tags';
+import { input, label } from './tags';
 
 export default class InputWrapper {
   node: HTMLElement;
@@ -16,7 +16,7 @@ export default class InputWrapper {
     const inputField = input(
       props.name as string,
       props.pattern as string,
-      (props.minLength as number).toString(),
+      (props.minLength as number)?.toString(),
       props.placeHolder,
       props.type,
       props.title as string,
@@ -28,6 +28,13 @@ export default class InputWrapper {
     errorElement.classList.add(props.errSelector);
     errorElement.innerText = props.errMessage;
 
+    if (props.label) {
+      const lbl = label({
+        className: props.labelSelector,
+        textContent: props.label,
+      });
+      node.appendChild(lbl.getElement());
+    }
     node.appendChild(inputField.getElement());
     node.appendChild(errorElement);
 

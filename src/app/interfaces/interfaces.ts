@@ -1,6 +1,8 @@
 export interface ITFInputProps {
   inputWrapperSelector?: string;
   inputSelector: string;
+  label?: string;
+  labelSelector?: string;
   name?: string;
   pattern?: string;
   minLength?: number;

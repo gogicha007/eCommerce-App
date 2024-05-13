@@ -3,7 +3,7 @@
     padding: 40px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 3px;
     border-radius: 15px;
     background: var(--bg-modal);
 }
@@ -18,9 +18,10 @@
 .input__password,
 .input__fname,
 .input__lname,
-.input__address {
+.input__address,
+.input__country {
     padding: 5px;
-    height: 40px;
+    height: 30px;
     width: 100%;
     border-radius: 7px;
     border: 1px solid var(--accent-color);
@@ -28,7 +29,9 @@
     background: var(--bg-color);
     outline: none;
 }
+.input__country {
 
+}
 .input__login:invalid,
 .input__password:invalid {
     border-color: red;
@@ -65,4 +68,9 @@
     justify-content: flex-start;
     gap: 10px;
     font-size: 12px;
+}
+
+.label {
+    font-size: 14px;
+    margin-bottom: 5px;
 }

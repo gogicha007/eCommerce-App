@@ -1,7 +1,9 @@
 import styles from './reg-form.module.css';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import API_KEYS from '../../../services/ct-constants';
-import { div, input } from '../../../components/tags';
+import {
+  div, input, select, option,
+} from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { getTokensByPass } from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
@@ -30,71 +32,125 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     const alertModal = new AlertModal();
     const spinner = new Spinner();
 
-    const addressInput = new InputWrapper({
-      inputWrapperSelector: styles.input__wrapper,
-      inputSelector: styles.input__address,
-      name: 'userAddress',
-      pattern: '',
-      minLength: 6,
-      placeHolder: 'Address...',
-      type: 'text',
-      title: '',
-      errSelector: styles['login-error'],
-      errMessage: 'Enter valid email...',
-    });
-
     const emailInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__login,
+      labelSelector: styles.label,
+      label: 'Email',
       name: 'userEmail',
-      pattern: '',
       minLength: 6,
       placeHolder: 'Email...',
       type: 'email',
-      title: '',
       errSelector: styles['login-error'],
-      errMessage: 'Enter valid email...',
-    });
-
-    const firstNameInput = new InputWrapper({
-      inputWrapperSelector: styles.input__wrapper,
-      inputSelector: styles.input__fname,
-      name: 'userEmail',
-      pattern: '',
-      minLength: 2,
-      placeHolder: 'First Name...',
-      type: 'email',
-      title: '',
-      errSelector: styles['login-error'],
-      errMessage: 'Enter valid email...',
-    });
-
-    const lastNameInput = new InputWrapper({
-      inputWrapperSelector: styles.input__wrapper,
-      inputSelector: styles.input__lname,
-      name: 'userFirstName',
-      pattern: '',
-      minLength: 2,
-      placeHolder: 'Last Name...',
-      type: 'email',
-      title: '',
-      errSelector: styles['login-error'],
-      errMessage: 'Enter valid email...',
+      errMessage: 'Enter correct email...',
     });
 
     const passwordWrapper = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__password,
+      labelSelector: styles.label,
+      label: 'Password',
       name: 'userPassword',
-      pattern: '',
       minLength: 8,
-      placeHolder: '',
+      placeHolder: 'Password...',
       type: 'password',
-      title: '',
       errSelector: styles['login-error'],
       errMessage:
-        'Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters',
+        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
     });
+
+    const firstNameInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__fname,
+      labelSelector: styles.label,
+      label: 'First name',
+      name: 'fName',
+      pattern: '[a-zA-Z]+',
+      minLength: 1,
+      placeHolder: 'First Name...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Must be at lease 1 charachter...',
+    });
+
+    const lastNameInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__lname,
+      labelSelector: styles.label,
+      label: 'Last name',
+      name: 'userFirstName',
+      pattern: '[a-zA-Z]+',
+      minLength: 1,
+      placeHolder: 'Last Name...',
+      type: 'email',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const birthDate = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      labelSelector: styles.label,
+      name: 'birthDate',
+      label: 'Date of birth',
+      placeHolder: '',
+      type: 'date',
+      errSelector: styles['login-error'],
+      errMessage: 'User must be 13 years old or older...',
+    });
+
+    const streetInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      labelSelector: styles.label,
+      name: 'userAddress',
+      label: 'Address',
+      minLength: 1,
+      placeHolder: 'Street...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const cityInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      labelSelector: styles.label,
+      name: 'userCity',
+      label: 'City',
+      pattern: '[a-zA-Z]+',
+      minLength: 1,
+      placeHolder: 'Address...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+    const postalInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      labelSelector: styles.label,
+      name: 'userPostal',
+      label: 'Postal code',
+      pattern: '[a-zA-Z]+',
+      minLength: 1,
+      placeHolder: 'Address...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const firstOption = option({
+      className: styles.input__option,
+      textContent: 'Country',
+    });
+    firstOption.setAttribute('value', '');
+
+    const countryInput = select(
+      {
+        className: styles.input__country,
+      },
+      firstOption,
+    );
 
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
@@ -112,17 +168,22 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
     super(
       { tag: 'form', className: styles.register__form },
-      firstNameInput.getNode(),
-      lastNameInput.getNode(),
       emailInput.getNode(),
       passwordWrapper.getNode(),
+      firstNameInput.getNode(),
+      lastNameInput.getNode(),
+      birthDate.getNode(),
+      streetInput.getNode(),
+      cityInput.getNode(),
+      postalInput.getNode(),
+      countryInput,
       inputBtn,
       loginLink,
       alertModal.getNode(),
       spinner.getNode(),
     );
 
-    this.addressInput = addressInput;
+    this.addressInput = streetInput;
     this.alertModal = alertModal;
     this.emailInput = emailInput;
     this.firstNameInpput = firstNameInput;
