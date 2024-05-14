@@ -8,5 +8,4 @@ const CountryList = () => {
   return list;
 };
 
-
-export default CountryList
+export default CountryList;
