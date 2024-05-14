@@ -1,4 +1,6 @@
-const POSTALS = {
+import { ITFMap } from '../interfaces/interfaces';
+
+const POSTALS: ITFMap = {
   us: ['United States', '^d{5}(?:[-s]d{4})?$', 'NNNNN (optionally NNNNN-NNNN)'],
   uk: [
     'United Kingdom',

@@ -1,5 +1,11 @@
 import API_KEYS from './ct-constants';
-import { ITFLoginData } from '../interfaces/interfaces';
+import {
+  ITFCreateCustomer,
+  ITFLoginData,
+  ITFUpdateAddress,
+} from '../interfaces/interfaces';
+
+export const getTokensBy = async () => {};
 
 export const getTokensByPass = async (data: ITFLoginData) => {
   const response = await fetch(
@@ -15,4 +21,51 @@ export const getTokensByPass = async (data: ITFLoginData) => {
   return response;
 };
 
-export default getTokensByPass;
+export const createCustomer = async (data: ITFCreateCustomer) => {
+  const response = await fetch(
+    `${API_KEYS.CTP_API_URL}/oauth/${API_KEYS.CTP_PROJECT_KEY}/customers`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${data.token}}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: data.login,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+      }),
+    },
+  );
+  return response;
+};
+
+export const updateCustomer = async (data: ITFUpdateAddress) => {
+  const response = await fetch(
+    `${API_KEYS.CTP_API_URL}/oauth/${API_KEYS.CTP_PROJECT_KEY}/customers`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${data.token}}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        version: data.version,
+        actions: [
+          {
+            action: 'addAddress',
+            address: {
+              streetName: data.streetName,
+              streetNumber: data.streetNumber,
+              postalCode: data.postalCode,
+              city: data.city,
+              country: data.country,
+            },
+          },
+        ],
+      }),
+    },
+  );
+  return response;
+};

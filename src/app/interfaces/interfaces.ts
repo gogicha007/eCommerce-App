@@ -31,3 +31,25 @@ export interface ITFSessionData {
   token_start?: number;
   token_expires_in?: number;
 }
+
+export interface ITFCreateCustomer {
+  token: string;
+  login: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
+
+export interface ITFUpdateAddress {
+  token: string;
+  version: number;
+  streetName: string;
+  streetNumber: string;
+  postalCode: string;
+  city: string;
+  country: string;
+}
+
+export interface ITFMap {
+  [key: string]: string[];
+}
