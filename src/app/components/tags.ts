@@ -51,4 +51,7 @@ export const select = (
 export const option = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLOptionElement>({ tag: 'option', ...props }, ...children);
+) => new ElementCreator<HTMLOptionElement>(
+  { tag: 'option', ...props },
+  ...children,
+);

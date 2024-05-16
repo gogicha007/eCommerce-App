@@ -1,7 +1,9 @@
 import styles from './reg-form.module.css';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import API_KEYS from '../../../services/ct-constants';
-import { div, input, select, option } from '../../../components/tags';
+import {
+  div, input, select, option,
+} from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { getTokensByPass } from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
@@ -141,7 +143,6 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       errMessage: 'Enter valid postal code...',
     });
 
-
     const firstOption = option({
       className: styles.input__option,
       textContent: 'Country',
@@ -164,7 +165,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       return anOption.getElement();
     });
 
-    countryInput.appendChildren(...options)
+    countryInput.appendChildren(...options);
 
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
@@ -177,7 +178,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     };
     const loginLink = div(
       { className: styles['login-link'], textContent: 'Have an account?' },
-      loginAnchor
+      loginAnchor,
     );
 
     super(
@@ -194,7 +195,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputBtn,
       loginLink,
       alertModal.getNode(),
-      spinner.getNode()
+      spinner.getNode(),
     );
 
     this.addressInput = streetInput;
@@ -240,7 +241,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       } else {
         this.alertModal.getNode().showModal();
         this.alertModal.updateModal(
-          'Please enter correct email and/or password'
+          'Please enter correct email and/or password',
         );
       }
     }
@@ -265,9 +266,10 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       valid = false;
     } else {
       this.passwordInput.errorElement.classList.remove(styles.show);
-    }   
+    }
     const today = new Date();
-    const age = today.getFullYear() - new Date(this.birthDate.inputField.value).getFullYear() 
+    const age = today.getFullYear()
+      - new Date(this.birthDate.inputField.value).getFullYear();
     if (age < 13) {
       setErrorFor(this.birthDate);
       valid = false;
