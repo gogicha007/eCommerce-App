@@ -1,9 +1,7 @@
 import styles from './reg-form.module.css';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import API_KEYS from '../../../services/ct-constants';
-import {
-  div, input, select, option,
-} from '../../../components/tags';
+import { div, input, select, option } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { getTokensByPass } from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
@@ -11,6 +9,7 @@ import Router from '../../../util/router';
 import SessionStorage from '../../../services/session-storage';
 import Spinner from '../../../components/spinner/spinner';
 import CountryList from '../../../util/helpers';
+import POSTALS from '../../../services/postal-codes';
 
 export default class RegForm extends ElementCreator<HTMLFormElement> {
   addressInput: InputWrapper;
@@ -21,6 +20,8 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
   cityInput: InputWrapper;
 
+  countryInput: ElementCreator<HTMLSelectElement>;
+
   emailInput: InputWrapper;
 
   firstNameInpput: InputWrapper;
@@ -28,6 +29,8 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
   lastNameInput: InputWrapper;
 
   passwordInput: InputWrapper;
+
+  postalInput: InputWrapper;
 
   routing: Router;
 
@@ -120,9 +123,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     const cityInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      // labelSelector: styles.label,
       name: 'userCity',
-      // label: 'City',
       pattern: '[a-zA-Z]+',
       minLength: 1,
       placeHolder: 'City...',
@@ -135,7 +136,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
       name: 'userPostal',
-      pattern: '[a-zA-Z]+',
+      pattern: '',
       minLength: 1,
       placeHolder: 'Postal...',
       type: 'text',
@@ -153,9 +154,9 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       {
         className: styles.input__country,
       },
-      firstOption,
+      firstOption
     );
-
+    
     const options = CountryList().map((val) => {
       const anOption = option({
         className: styles.input__option,
@@ -165,6 +166,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       return anOption.getElement();
     });
 
+    countryInput.getElement().required = true
     countryInput.appendChildren(...options);
 
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
@@ -178,7 +180,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     };
     const loginLink = div(
       { className: styles['login-link'], textContent: 'Have an account?' },
-      loginAnchor,
+      loginAnchor
     );
 
     super(
@@ -195,17 +197,19 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputBtn,
       loginLink,
       alertModal.getNode(),
-      spinner.getNode(),
+      spinner.getNode()
     );
 
     this.addressInput = streetInput;
     this.alertModal = alertModal;
     this.birthDate = birthDate;
     this.cityInput = cityInput;
+    this.countryInput = countryInput;
     this.emailInput = emailInput;
     this.firstNameInpput = firstNameInput;
     this.lastNameInput = lastNameInput;
     this.passwordInput = passwordWrapper;
+    this.postalInput = postalInput;
     this.routing = routing;
     this.spinner = spinner;
 
@@ -241,7 +245,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       } else {
         this.alertModal.getNode().showModal();
         this.alertModal.updateModal(
-          'Please enter correct email and/or password',
+          'Please enter correct email and/or password'
         );
       }
     }
@@ -252,6 +256,13 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     function setErrorFor(inputEl: InputWrapper) {
       inputEl.errorElement.classList.add(styles.show);
     }
+    const today = new Date();
+    const age =
+      today.getFullYear() -
+      new Date(this.birthDate.inputField.value).getFullYear();
+    const country = this.countryInput.getElement().value
+    const postalRegx = new RegExp(POSTALS[country][1])
+    console.log(postalRegx)
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const passRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,}$/;
     let valid = false;
@@ -267,12 +278,18 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     } else {
       this.passwordInput.errorElement.classList.remove(styles.show);
     }
-    const today = new Date();
-    const age = today.getFullYear()
-      - new Date(this.birthDate.inputField.value).getFullYear();
     if (age < 13) {
       setErrorFor(this.birthDate);
       valid = false;
+    } else {
+      this.birthDate.errorElement.classList.remove(styles.show);
+    }
+    if (!postalRegx.test(this.postalInput.inputField.value)) {
+      this.postalInput.errorElement.innerText = `Valid format - ${POSTALS[country][2]}`
+      setErrorFor(this.postalInput);
+      valid = false;
+    } else {
+      this.postalInput.errorElement.classList.remove(styles.show);
     }
     return valid;
   }
