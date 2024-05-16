@@ -263,7 +263,6 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       - new Date(this.birthDate.inputField.value).getFullYear();
     const country = this.countryInput.getElement().value;
     const postalRegx = new RegExp(POSTALS[country][1]);
-    console.log(postalRegx);
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const passRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,}$/;
     let valid = false;
