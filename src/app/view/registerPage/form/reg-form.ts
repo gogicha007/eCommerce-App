@@ -1,20 +1,23 @@
 import styles from './reg-form.module.css';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import API_KEYS from '../../../services/ct-constants';
-import {
-  div, input, select, option,
-} from '../../../components/tags';
+import { div, input, select, option } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { getTokensByPass } from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
 import Router from '../../../util/router';
 import SessionStorage from '../../../services/session-storage';
 import Spinner from '../../../components/spinner/spinner';
+import CountryList from '../../../util/helpers';
 
 export default class RegForm extends ElementCreator<HTMLFormElement> {
   addressInput: InputWrapper;
 
   alertModal: AlertModal;
+
+  birthDate: InputWrapper;
+
+  cityInput: InputWrapper;
 
   emailInput: InputWrapper;
 
@@ -56,7 +59,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       type: 'password',
       errSelector: styles['login-error'],
       errMessage:
-        'Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+        'Min 8 characters, at least 1 uppercase, 1 lowercase letter and 1 number',
     });
 
     const firstNameInput = new InputWrapper({
@@ -70,7 +73,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       placeHolder: 'First Name...',
       type: 'text',
       errSelector: styles['login-error'],
-      errMessage: 'Must be at lease 1 charachter...',
+      errMessage: 'Only charachters allowed',
     });
 
     const lastNameInput = new InputWrapper({
@@ -82,9 +85,9 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       pattern: '[a-zA-Z]+',
       minLength: 1,
       placeHolder: 'Last Name...',
-      type: 'email',
+      type: 'text',
       errSelector: styles['login-error'],
-      errMessage: 'Enter valid email...',
+      errMessage: 'Only charachters allowed',
     });
 
     const birthDate = new InputWrapper({
@@ -115,29 +118,29 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     const cityInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      labelSelector: styles.label,
+      // labelSelector: styles.label,
       name: 'userCity',
-      label: 'City',
+      // label: 'City',
       pattern: '[a-zA-Z]+',
       minLength: 1,
-      placeHolder: 'Address...',
+      placeHolder: 'City...',
       type: 'text',
       errSelector: styles['login-error'],
       errMessage: 'Enter valid email...',
     });
+
     const postalInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      labelSelector: styles.label,
       name: 'userPostal',
-      label: 'Postal code',
       pattern: '[a-zA-Z]+',
       minLength: 1,
-      placeHolder: 'Address...',
+      placeHolder: 'Postal...',
       type: 'text',
       errSelector: styles['login-error'],
-      errMessage: 'Enter valid email...',
+      errMessage: 'Enter valid postal code...',
     });
+
 
     const firstOption = option({
       className: styles.input__option,
@@ -152,6 +155,17 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       firstOption,
     );
 
+    const options = CountryList().map((val) => {
+      const anOption = option({
+        className: styles.input__option,
+        textContent: val[1],
+      });
+      anOption.setAttribute('value', val[0]);
+      return anOption.getElement();
+    });
+
+    countryInput.appendChildren(...options)
+
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
     const loginAnchor = document.createElement('a');
@@ -163,7 +177,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     };
     const loginLink = div(
       { className: styles['login-link'], textContent: 'Have an account?' },
-      loginAnchor,
+      loginAnchor
     );
 
     super(
@@ -180,11 +194,13 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputBtn,
       loginLink,
       alertModal.getNode(),
-      spinner.getNode(),
+      spinner.getNode()
     );
 
     this.addressInput = streetInput;
     this.alertModal = alertModal;
+    this.birthDate = birthDate;
+    this.cityInput = cityInput;
     this.emailInput = emailInput;
     this.firstNameInpput = firstNameInput;
     this.lastNameInput = lastNameInput;
@@ -224,10 +240,11 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       } else {
         this.alertModal.getNode().showModal();
         this.alertModal.updateModal(
-          'Please enter correct email and/or password',
+          'Please enter correct email and/or password'
         );
       }
     }
+    this.spinner.hide();
   }
 
   validateFillForm() {
@@ -236,7 +253,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     }
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const passRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,}$/;
-    let valid = true;
+    let valid = false;
     if (!emailRegx.test(this.emailInput.inputField.value)) {
       setErrorFor(this.emailInput);
       valid = false;
@@ -248,8 +265,13 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       valid = false;
     } else {
       this.passwordInput.errorElement.classList.remove(styles.show);
+    }   
+    const today = new Date();
+    const age = today.getFullYear() - new Date(this.birthDate.inputField.value).getFullYear() 
+    if (age < 13) {
+      setErrorFor(this.birthDate);
+      valid = false;
     }
-
     return valid;
   }
 }
