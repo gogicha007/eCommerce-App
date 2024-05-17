@@ -1,6 +1,78 @@
-.sign-up {
+.register__form {
+    width: 300px;
+    padding: 30px;
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 15px;
+    background: var(--bg-modal);
 }
 
+.input__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.input__login,
+.input__password,
+.input__fname,
+.input__lname,
+.input__address,
+.input__country {
+    padding: 5px;
+    height: 30px;
+    width: 100%;
+    border-radius: 7px;
+    border: 1px solid var(--accent-color);
+    font-size: 14px;
+    background: var(--bg-color);
+    outline: none;
+}
+.input__country {
+    margin-bottom: 10px;
+}
+.input__login:invalid,
+.input__password:invalid {
+    border-color: red;
+}
+
+.input__login:placeholder-shown,
+.input__password:placeholder-shown {
+    border-color: #3c4856;
+}
+
+.input__submit {
+    height: 35px;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid #3c4856;
+    color: var(--text-color);
+    background: var(--bg-color);
+}
+
+.login-error {
+    visibility: hidden;
+    color: #786347;
+}
+
+.show {
+    visibility: visible;
+}
+
+.login-link {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    aling-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input__option {}
