@@ -5,7 +5,11 @@ import {
   div, input, select, option,
 } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
-import { getTokensByPass } from '../../../services/ct-requests';
+import {
+  createCustomer,
+  getTokensByCredentials,
+  // getTokensByPass,
+} from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
 import Router from '../../../util/router';
 import SessionStorage from '../../../services/session-storage';
@@ -223,8 +227,15 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     event.preventDefault();
     this.spinner.show();
     if (this.validateFillForm()) {
-      const res = await getTokensByPass({
+      const token = getTokensByCredentials();
+      console.log(token);
+
+      return;
+      const res = await createCustomer({
+        token: '',
         login: this.emailInput.inputField.value,
+        firstName: this.firstNameInpput.inputField.value,
+        lastName: this.lastNameInput.inputField.value,
         password: this.passwordInput.inputField.value,
       });
       this.spinner.hide();

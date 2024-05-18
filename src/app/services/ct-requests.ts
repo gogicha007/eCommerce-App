@@ -5,7 +5,18 @@ import {
   ITFUpdateAddress,
 } from '../interfaces/interfaces';
 
-export const getTokensBy = async () => {};
+export const getTokensByCredentials = async () => {
+  const response = await fetch(
+    `${API_KEYS.CTP_AUTH_URL}/oauth/token?gran_type=client_credentials`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa(`${API_KEYS.CTP_CLIENT_ID}:${API_KEYS.CTP_CLIENT_SECRET}`)}`,
+      },
+    },
+  );
+  return response;
+};
 
 export const getTokensByPass = async (data: ITFLoginData) => {
   const response = await fetch(
