@@ -7,7 +7,7 @@ import {
 
 export const getTokensByCredentials = async () => {
   const response = await fetch(
-    `${API_KEYS.CTP_AUTH_URL}/oauth/token?gran_type=client_credentials`,
+    `${API_KEYS.CTP_AUTH_URL}/oauth/token?grant_type=client_credentials`,
     {
       method: 'POST',
       headers: {
@@ -33,12 +33,13 @@ export const getTokensByPass = async (data: ITFLoginData) => {
 };
 
 export const createCustomer = async (data: ITFCreateCustomer) => {
+  console.log(data);
   const response = await fetch(
-    `${API_KEYS.CTP_API_URL}/oauth/${API_KEYS.CTP_PROJECT_KEY}/customers`,
+    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/customers`,
     {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${data.token}}`,
+        Authorization: `Bearer ${data.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

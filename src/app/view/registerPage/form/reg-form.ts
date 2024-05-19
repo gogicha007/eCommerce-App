@@ -8,7 +8,7 @@ import ElementCreator from '../../../util/elementCreator';
 import {
   createCustomer,
   getTokensByCredentials,
-  // getTokensByPass,
+  getTokensByPass,
 } from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
 import Router from '../../../util/router';
@@ -16,6 +16,7 @@ import SessionStorage from '../../../services/session-storage';
 import Spinner from '../../../components/spinner/spinner';
 import CountryList from '../../../util/helpers';
 import POSTALS from '../../../services/postal-codes';
+import { ITFLoginData } from '../../../interfaces/interfaces';
 
 export default class RegForm extends ElementCreator<HTMLFormElement> {
   addressInput: InputWrapper;
@@ -223,44 +224,114 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     this.element.addEventListener('submit', handler);
   }
 
+  private async getAccTokenByCredentials() {
+    const resToken = await getTokensByCredentials();
+    let result = null;
+    if (resToken.status === 200) {
+      const tokenData = await resToken.json();
+      result = {
+        access_token: tokenData.access_token,
+        refresh_token: tokenData.refresh_token || null,
+        token_start: null,
+        token_expires_in: tokenData.expires_in || null,
+      };
+    } else {
+      this.spinner.hide();
+      const errResponse = await resToken.json();
+      this.alertModal.getNode().showModal();
+      this.alertModal.updateModal(
+        `Error: ${errResponse.error}, ${errResponse.message}`,
+      );
+    }
+    return result;
+  }
+
+  private async reqCreateCustomer(accToken: string) {
+    const resCreateCustomer = await createCustomer({
+      token: accToken,
+      login: this.emailInput.inputField.value,
+      firstName: this.firstNameInpput.inputField.value,
+      lastName: this.lastNameInput.inputField.value,
+      password: this.passwordInput.inputField.value,
+    });
+    let result = null;
+    if (resCreateCustomer.status === 201) {
+      const customerData = await resCreateCustomer.json();
+      result = {
+        login: this.emailInput.inputField.value,
+        password: this.passwordInput.inputField.value,
+        isLogged: true,
+        customer_id: customerData.customer.id,
+        customer_name: this.firstNameInpput.inputField.value,
+        version: customerData.customer.version,
+      };
+    } else {
+      this.spinner.hide();
+      const errResponse = await resCreateCustomer.json();
+      this.alertModal.getNode().showModal();
+      this.alertModal.updateModal(
+        `Error: ${errResponse.error || 'error message'}, ${errResponse.message}`,
+      );
+    }
+    return result;
+  }
+
+  private async reqTokensByPass(data: ITFLoginData) {
+    const resTokensByPass = await getTokensByPass({
+      login: data.login,
+      password: data.password,
+    });
+    let result = null;
+    if (resTokensByPass.status === 200) {
+      const credentials = await resTokensByPass.json();
+      result = {
+        access_token: credentials.access_token as string,
+        token_expires_in: credentials.expires_in as number,
+        refresh_token: credentials.refresh_token as string,
+      };
+    } else {
+      const errResponse = await resTokensByPass.json();
+      this.alertModal.getNode().showModal();
+      this.alertModal.updateModal(
+        `Error: ${errResponse.error}, ${errResponse.message}`,
+      );
+    }
+    return result;
+  }
+
   private async submitHandler(event: Event) {
     event.preventDefault();
     this.spinner.show();
     if (this.validateFillForm()) {
-      const token = getTokensByCredentials();
-      console.log(token);
+      const accTokenData = await this.getAccTokenByCredentials();
+      if (!accTokenData) {
+        this.spinner.hide();
+        return;
+      }
+      const storage = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
 
-      return;
-      const res = await createCustomer({
-        token: '',
+      const customerData = await this.reqCreateCustomer(
+        accTokenData.access_token,
+      );
+      if (!customerData) {
+        this.spinner.hide();
+        return;
+      }
+      console.log(customerData);
+      storage.saveData(customerData);
+
+      const tokensByPass = await this.reqTokensByPass({
         login: this.emailInput.inputField.value,
-        firstName: this.firstNameInpput.inputField.value,
-        lastName: this.lastNameInput.inputField.value,
         password: this.passwordInput.inputField.value,
       });
-      this.spinner.hide();
-      if (res.status === 200) {
-        const credentials = await res.json();
-        const userData = {
-          login: this.emailInput.inputField.value,
-          password: this.passwordInput.inputField.value,
-          isLogged: true,
-        };
-        const tokens = {
-          access_token: credentials.access_token,
-          token_expires_in: credentials.expires_in,
-          refresh_token: credentials.refresh_token,
-        };
-        const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
-        session.saveData(userData);
-        session.setTokens(tokens);
-        this.routing.navigate('main-page');
-      } else {
-        this.alertModal.getNode().showModal();
-        this.alertModal.updateModal(
-          'Please enter correct email and/or password',
-        );
+      if (!tokensByPass) {
+        this.spinner.hide();
+        return;
       }
+      storage.setTokens(tokensByPass);
+      this.spinner.hide();
+      this.routing.navigate('main-page');
+      return;
     }
     this.spinner.hide();
   }
@@ -276,7 +347,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     const postalRegx = new RegExp(POSTALS[country][1]);
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     const passRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,}$/;
-    let valid = false;
+    let valid = true;
     if (!emailRegx.test(this.emailInput.inputField.value)) {
       setErrorFor(this.emailInput);
       valid = false;

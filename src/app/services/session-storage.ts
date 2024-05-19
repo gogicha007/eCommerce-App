@@ -30,6 +30,8 @@ class SessionStorage {
       storageData.refresh_token = token.refresh_token as string;
       storageData.token_start = Date.now();
       sessionStorage.setItem(this.storageKey, JSON.stringify(storageData));
+    } else {
+      sessionStorage.setItem(this.storageKey, JSON.stringify(token));
     }
   }
 

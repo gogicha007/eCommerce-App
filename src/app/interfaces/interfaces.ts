@@ -23,13 +23,16 @@ export interface ITFUser {
 }
 
 export interface ITFSessionData {
-  login?: string;
-  password?: string;
-  isLogged?: boolean;
-  access_token?: string;
-  refresh_token?: string;
-  token_start?: number;
-  token_expires_in?: number;
+  login?: string | null;
+  password?: string | null;
+  isLogged?: boolean | null;
+  access_token?: string | null;
+  refresh_token?: string | null;
+  token_start?: number | null;
+  token_expires_in?: number | null;
+  customer_id?: string | null;
+  customer_name?: string | null;
+  version?: number | null;
 }
 
 export interface ITFCreateCustomer {
