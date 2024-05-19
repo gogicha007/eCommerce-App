@@ -125,9 +125,10 @@ export default class Form extends ElementCreator<HTMLFormElement> {
         session.setTokens(tokens);
         this.routing.navigate('main-page');
       } else {
+        const errResponse = await res.json();
         this.alertModal.getNode().showModal();
         this.alertModal.updateModal(
-          'Please enter correct email and/or password',
+          `Error: ${errResponse.error}, ${errResponse.message}`,
         );
       }
     }

@@ -2,7 +2,6 @@ import { div } from '../../components/tags';
 import ElementCreator from '../../util/elementCreator';
 import RegForm from './form/reg-form';
 import Router from '../../util/router';
-// import SessionStorage from '../../services/session-storage';
 import styles from './register.module.css';
 
 export default class RegisterPage extends ElementCreator {
