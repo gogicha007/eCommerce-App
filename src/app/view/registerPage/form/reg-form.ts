@@ -2,7 +2,12 @@ import styles from './reg-form.module.css';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import API_KEYS from '../../../services/ct-constants';
 import {
-  div, input, select, option,
+  div,
+  input,
+  select,
+  option,
+  fieldset,
+  label,
 } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import {
@@ -23,9 +28,13 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
   alertModal: AlertModal;
 
+  billAddress: ElementCreator<HTMLFieldSetElement>;
+
   birthDate: InputWrapper;
 
   cityInput: InputWrapper;
+
+  checkInput: ElementCreator<HTMLInputElement>;
 
   countryInput: ElementCreator<HTMLSelectElement>;
 
@@ -119,7 +128,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputSelector: styles.input__address,
       labelSelector: styles.label,
       name: 'userAddress',
-      label: 'Address',
+      label: 'Shipping Address',
       minLength: 1,
       placeHolder: 'Street...',
       type: 'text',
@@ -176,6 +185,112 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     countryInput.getElement().required = true;
     countryInput.appendChildren(...options);
 
+    const checkLabel = label({
+      className: styles.label,
+      textContent: 'same as shipping address',
+    });
+
+    const checkInput = input(
+      'checkAddress',
+      '',
+      '',
+      '',
+      'checkbox',
+      '',
+      styles.input__check,
+    );
+    checkInput.getElement().checked = true;
+    checkInput.getElement().addEventListener('change', (e) => {
+      if ((e.target as HTMLInputElement).checked) {
+        this.billAddress.getElement().style.display = 'none';
+      } else {
+        this.billAddress.getElement().style.display = 'block';
+      }
+    });
+
+    const checkBox = div(
+      {
+        className: styles.check__box,
+      },
+      checkInput,
+      checkLabel,
+    );
+    const checkAddress = div(
+      { className: styles.check__address, textContent: 'Billing Address' },
+      checkBox,
+    );
+
+    const billStreetInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      labelSelector: styles.label,
+      name: 'billStreet',
+      minLength: 1,
+      placeHolder: 'Street...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const billCityInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      name: 'billCity',
+      pattern: '[a-zA-Z]+',
+      minLength: 1,
+      placeHolder: 'City...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
+    });
+
+    const billPostalInput = new InputWrapper({
+      inputWrapperSelector: styles.input__wrapper,
+      inputSelector: styles.input__address,
+      name: 'billPostal',
+      pattern: '',
+      minLength: 1,
+      placeHolder: 'Postal...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid postal code...',
+    });
+
+    const billFirstOption = option({
+      className: styles.input__option,
+      textContent: 'Country',
+    });
+    billFirstOption.setAttribute('value', '');
+
+    const billCountryInput = select(
+      {
+        className: styles.input__country,
+      },
+      billFirstOption,
+    );
+
+    const billOptions = CountryList().map((val) => {
+      const anOption = option({
+        className: styles.input__option,
+        textContent: val[1],
+      });
+      anOption.setAttribute('value', val[0]);
+      return anOption.getElement();
+    });
+
+    billCountryInput.getElement().required = true;
+    billCountryInput.appendChildren(...billOptions);
+
+    const billAddress = fieldset(
+      {
+        className: styles['form__bill-address'],
+      },
+      billStreetInput.getNode(),
+      billCityInput.getNode(),
+      billPostalInput.getNode(),
+      billCountryInput,
+    );
+
     const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
     const loginAnchor = document.createElement('a');
@@ -201,6 +316,8 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       cityInput.getNode(),
       postalInput.getNode(),
       countryInput,
+      checkAddress,
+      billAddress,
       inputBtn,
       loginLink,
       alertModal.getNode(),
@@ -209,7 +326,9 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
     this.addressInput = streetInput;
     this.alertModal = alertModal;
+    this.billAddress = billAddress;
     this.birthDate = birthDate;
+    this.checkInput = checkInput;
     this.cityInput = cityInput;
     this.countryInput = countryInput;
     this.emailInput = emailInput;
@@ -317,7 +436,6 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
         this.spinner.hide();
         return;
       }
-      console.log(customerData);
       storage.saveData(customerData);
 
       const tokensByPass = await this.reqTokensByPass({

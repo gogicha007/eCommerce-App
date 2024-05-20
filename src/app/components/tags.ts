@@ -55,3 +55,19 @@ export const option = (
   { tag: 'option', ...props },
   ...children,
 );
+
+export const fieldset = (
+  props: ParamsTags,
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLFieldSetElement>(
+  { tag: 'fieldset', ...props },
+  ...children,
+);
+
+export const legend = (
+  props: ParamsTags,
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLOptionElement>(
+  { tag: 'legend', ...props },
+  ...children,
+);
