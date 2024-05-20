@@ -11,8 +11,8 @@ export default class StartPage extends ElementCreator {
 
   constructor(routing: Router) {
     super(
-      { tag: 'div', className: 'startPage' },
-      div({ className: styles.main__title, textContent: 'E-COMM' }),
+      { tag: 'div', className: styles.main },
+      div({ className: styles.main__title, textContent: 'E-COMM MAIN PAGE' }),
       button({
         txt: 'Log Out',
         onClick: () => {
@@ -21,7 +21,7 @@ export default class StartPage extends ElementCreator {
           window.localStorage.clear();
           this.routing.navigate('login-page');
         },
-        className: 'btn__start-page',
+        className: styles['main__logout-btn'],
       }),
     );
     this.routing = routing;
