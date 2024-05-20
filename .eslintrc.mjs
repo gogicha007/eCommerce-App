@@ -1,48 +1,35 @@
 export default {
-    "env": {
-        "root": true,
-        "browser": true,
-        "es2021": true
+    env: {
+        root: true,
+        browser: true,
+        es2021: true,
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "overrides": [
+    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    overrides: [
         {
-            "env": {
-                "node": true
+            env: {
+                node: true,
             },
-            "files": [
-                ".eslintrc.{js,cjs}"
-            ],
-            "parserOptions": {
-                "sourceType": "script"
-            }
-        }
+            files: [".eslintrc.{js,cjs,mjs}"],
+            parserOptions: {
+                sourceType: "script",
+            },
+        },
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
     },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "indent": [
+    plugins: ["@typescript-eslint"],
+    rules: {
+        indent: ["error", 4],
+        "linebreak-style": [
             "error",
-            4
+            process.platform === "win32" ? "windows" : "unix",
         ],
-        "linebreak-style": ["error", process.platform === "win32" ? "windows" : "unix"],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "@typescript-eslint/no-var-requires": "error"
-    }
+        quotes: ["error", "double"],
+        semi: ["error", "always"],
+        "@typescript-eslint/no-var-requires": "error",
+    },
 };
