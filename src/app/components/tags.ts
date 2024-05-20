@@ -36,3 +36,38 @@ export const input = (
   if (className) inputComponent.addClass(className);
   return inputComponent;
 };
+
+export const select = (
+  props: ParamsTags,
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLSelectElement>(
+  {
+    tag: 'select',
+    className: props.className,
+  },
+  ...children,
+);
+
+export const option = (
+  props: ParamsTags,
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLOptionElement>(
+  { tag: 'option', ...props },
+  ...children,
+);
+
+export const fieldset = (
+  props: ParamsTags,
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLFieldSetElement>(
+  { tag: 'fieldset', ...props },
+  ...children,
+);
+
+export const legend = (
+  props: ParamsTags,
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLOptionElement>(
+  { tag: 'legend', ...props },
+  ...children,
+);
