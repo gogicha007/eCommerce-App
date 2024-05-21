@@ -93,4 +93,4 @@ export const queryProducts = async (token: string) => {
     },
   );
   return response;
-}
+};
