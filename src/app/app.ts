@@ -5,6 +5,7 @@ import RegisterPage from './view/registerPage/retisterView';
 import Router from './util/router';
 import LocalStorage from './services/local-storage';
 import StartPage from './view/mainPage/mainView';
+import FailPage from './view/failPage/failView';
 
 export default class App {
   routing: Router;
@@ -27,6 +28,12 @@ export default class App {
 
   createView() {
     return [
+      {
+        path: '404',
+        callback: () => {
+          App.addContent(new FailPage(this.routing));
+        },
+      },
       {
         path: 'login-page',
         callback: () => {

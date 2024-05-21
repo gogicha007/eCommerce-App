@@ -17,10 +17,12 @@ export default class Router {
       window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${url}`;
     }
     const hash = window.location.hash.slice(1);
-    const route = this.routes.find((item) => item.path === hash);
+    let route = this.routes.find((item) => item.path === hash);
+
+    console.log(route)
 
     if (!route) {
-      throw new Error('page not found!');
+      route = this.routes.find((item) => item.path === '404') as Routing
     }
 
     route.callback();
