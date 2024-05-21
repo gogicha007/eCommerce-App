@@ -19,10 +19,10 @@ export default class Router {
     const hash = window.location.hash.slice(1);
     let route = this.routes.find((item) => item.path === hash);
 
-    console.log(route)
+    console.log(route);
 
     if (!route) {
-      route = this.routes.find((item) => item.path === '404') as Routing
+      route = this.routes.find((item) => item.path === '404') as Routing;
     }
 
     route.callback();
