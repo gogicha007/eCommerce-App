@@ -1,4 +1,4 @@
-import { ITFInputProps } from '../interfaces/interfaces';
+import { ITFInputProps } from "../interfaces/interfaces";
 export default class InputWrapper {
     node: HTMLElement;
     inputField: HTMLInputElement;

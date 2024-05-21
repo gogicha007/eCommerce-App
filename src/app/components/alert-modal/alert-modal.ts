@@ -1,4 +1,4 @@
-import styles from "./alert-modal.module.css";
+import styles from './alert-modal.module.css';
 
 class AlertModal {
   container: HTMLDivElement;
@@ -6,10 +6,10 @@ class AlertModal {
   node: HTMLDialogElement;
 
   constructor() {
-    const modal = document.createElement("dialog");
+    const modal = document.createElement('dialog');
     modal.classList.add(styles.modal);
 
-    const modalContainer = document.createElement("div");
+    const modalContainer = document.createElement('div');
     modalContainer.classList.add(styles.modal__container);
     modal.onclick = this.closeModal.bind(this);
 
@@ -20,7 +20,7 @@ class AlertModal {
   }
 
   public appendModal(element: HTMLElement) {
-    this.node.innerHTML = "";
+    this.node.innerHTML = '';
     this.container.appendChild(element);
   }
 

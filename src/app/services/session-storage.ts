@@ -1,4 +1,4 @@
-import { ITFSessionData } from "../interfaces/interfaces";
+import { ITFSessionData } from '../interfaces/interfaces';
 
 class SessionStorage {
   private storageKey: string;
@@ -8,7 +8,7 @@ class SessionStorage {
   }
 
   public getUser(): string {
-    const data = this.getData() || "";
+    const data = this.getData() || '';
     return `${data.login || null} ${data.password || null} ${data.isLogged || null}`;
   }
 

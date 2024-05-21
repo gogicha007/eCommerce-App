@@ -1,6 +1,6 @@
-import styles from "./reg-form.module.css";
-import AlertModal from "../../../components/alert-modal/alert-modal";
-import API_KEYS from "../../../services/ct-constants";
+import styles from './reg-form.module.css';
+import AlertModal from '../../../components/alert-modal/alert-modal';
+import API_KEYS from '../../../services/ct-constants';
 import {
   div,
   input,
@@ -8,20 +8,20 @@ import {
   option,
   fieldset,
   label,
-} from "../../../components/tags";
-import ElementCreator from "../../../util/elementCreator";
+} from '../../../components/tags';
+import ElementCreator from '../../../util/elementCreator';
 import {
   createCustomer,
   getTokensByCredentials,
   getTokensByPass,
-} from "../../../services/ct-requests";
-import InputWrapper from "../../../components/input-wrapper";
-import Router from "../../../util/router";
-import LocalStorage from "../../../services/local-storage";
-import Spinner from "../../../components/spinner/spinner";
-import CountryList from "../../../util/helpers";
-import POSTALS from "../../../services/postal-codes";
-import { ITFLoginData } from "../../../interfaces/interfaces";
+} from '../../../services/ct-requests';
+import InputWrapper from '../../../components/input-wrapper';
+import Router from '../../../util/router';
+import LocalStorage from '../../../services/local-storage';
+import Spinner from '../../../components/spinner/spinner';
+import CountryList from '../../../util/helpers';
+import POSTALS from '../../../services/postal-codes';
+import { ITFLoginData } from '../../../interfaces/interfaces';
 
 export default class RegForm extends ElementCreator<HTMLFormElement> {
   addressInput: InputWrapper;
@@ -60,111 +60,111 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__login,
       labelSelector: styles.label,
-      label: "Email",
-      name: "userEmail",
+      label: 'Email',
+      name: 'userEmail',
       minLength: 6,
-      placeHolder: "Email...",
-      type: "email",
-      errSelector: styles["login-error"],
-      errMessage: "Enter correct email...",
+      placeHolder: 'Email...',
+      type: 'email',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter correct email...',
     });
 
     const passwordWrapper = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__password,
       labelSelector: styles.label,
-      label: "Password",
-      name: "userPassword",
+      label: 'Password',
+      name: 'userPassword',
       minLength: 8,
-      placeHolder: "Password...",
-      type: "password",
-      errSelector: styles["login-error"],
+      placeHolder: 'Password...',
+      type: 'password',
+      errSelector: styles['login-error'],
       errMessage:
-        "Min 8 characters, at least 1 uppercase, 1 lowercase letter and 1 number",
+        'Min 8 characters, at least 1 uppercase, 1 lowercase letter and 1 number',
     });
 
     const firstNameInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__fname,
       labelSelector: styles.label,
-      label: "First name",
-      name: "fName",
-      pattern: "[a-zA-Z]+",
+      label: 'First name',
+      name: 'fName',
+      pattern: '[a-zA-Z]+',
       minLength: 1,
-      placeHolder: "First Name...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Only charachters allowed",
+      placeHolder: 'First Name...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Only charachters allowed',
     });
 
     const lastNameInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__lname,
       labelSelector: styles.label,
-      label: "Last name",
-      name: "userFirstName",
-      pattern: "[a-zA-Z]+",
+      label: 'Last name',
+      name: 'userFirstName',
+      pattern: '[a-zA-Z]+',
       minLength: 1,
-      placeHolder: "Last Name...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Only charachters allowed",
+      placeHolder: 'Last Name...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Only charachters allowed',
     });
 
     const birthDate = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
       labelSelector: styles.label,
-      name: "birthDate",
-      label: "Date of birth",
-      placeHolder: "",
-      type: "date",
-      errSelector: styles["login-error"],
-      errMessage: "User must be 13 years old or older...",
+      name: 'birthDate',
+      label: 'Date of birth',
+      placeHolder: '',
+      type: 'date',
+      errSelector: styles['login-error'],
+      errMessage: 'User must be 13 years old or older...',
     });
 
     const streetInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
       labelSelector: styles.label,
-      name: "userAddress",
-      label: "Shipping Address",
+      name: 'userAddress',
+      label: 'Shipping Address',
       minLength: 1,
-      placeHolder: "Street...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Enter valid email...",
+      placeHolder: 'Street...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
     });
 
     const cityInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      name: "userCity",
-      pattern: "[a-zA-Z]+",
+      name: 'userCity',
+      pattern: '[a-zA-Z]+',
       minLength: 1,
-      placeHolder: "City...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Enter valid email...",
+      placeHolder: 'City...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
     });
 
     const postalInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      name: "userPostal",
-      pattern: "",
+      name: 'userPostal',
+      pattern: '',
       minLength: 1,
-      placeHolder: "Postal...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Enter valid postal code...",
+      placeHolder: 'Postal...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid postal code...',
     });
 
     const firstOption = option({
       className: styles.input__option,
-      textContent: "Country",
+      textContent: 'Country',
     });
-    firstOption.setAttribute("value", "");
+    firstOption.setAttribute('value', '');
 
     const countryInput = select(
       {
@@ -178,7 +178,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
         className: styles.input__option,
         textContent: val[1],
       });
-      anOption.setAttribute("value", val[0]);
+      anOption.setAttribute('value', val[0]);
       return anOption.getElement();
     });
 
@@ -187,34 +187,26 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
     const checkLabel = label({
       className: styles.label,
-      textContent: "same as shipping address",
+      textContent: 'same as shipping address',
     });
 
     const checkInput = input(
-      "checkAddress",
-      "",
-      "",
-      "",
-      "checkbox",
-      "",
+      'checkAddress',
+      '',
+      '',
+      '',
+      'checkbox',
+      '',
       styles.input__check,
     );
     checkInput.getElement().checked = true;
-    checkInput.getElement().addEventListener("change", (e) => {
+    checkInput.getElement().addEventListener('change', (e) => {
       if ((e.target as HTMLInputElement).checked) {
-        this.billAddress.getElement().childNodes.forEach((item) => {
-          if (item instanceof HTMLDivElement)
-            (item.childNodes[0] as HTMLInputElement).required = false;
-          if (item instanceof HTMLSelectElement) item.required = false;
-        });
-        this.billAddress.getElement().style.display = "none";
+        this.setBillAddReq(false);
+        this.billAddress.getElement().style.display = 'none';
       } else {
-        this.billAddress.getElement().childNodes.forEach((item) => {
-          if (item instanceof HTMLDivElement)
-            (item.childNodes[0] as HTMLInputElement).required = true;
-          if (item instanceof HTMLSelectElement) item.required = true;
-        });
-        this.billAddress.getElement().style.display = "block";
+        this.setBillAddReq(true);
+        this.billAddress.getElement().style.display = 'block';
       }
     });
 
@@ -226,7 +218,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       checkLabel,
     );
     const checkAddress = div(
-      { className: styles.check__address, textContent: "Billing Address" },
+      { className: styles.check__address, textContent: 'Billing Address' },
       checkBox,
     );
 
@@ -234,43 +226,43 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
       labelSelector: styles.label,
-      name: "billStreet",
+      name: 'billStreet',
       minLength: 1,
-      placeHolder: "Street...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Enter valid email...",
+      placeHolder: 'Street...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
     });
 
     const billCityInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      name: "billCity",
-      pattern: "[a-zA-Z]+",
+      name: 'billCity',
+      pattern: '[a-zA-Z]+',
       minLength: 1,
-      placeHolder: "City...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Enter valid email...",
+      placeHolder: 'City...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid email...',
     });
 
     const billPostalInput = new InputWrapper({
       inputWrapperSelector: styles.input__wrapper,
       inputSelector: styles.input__address,
-      name: "billPostal",
-      pattern: "",
+      name: 'billPostal',
+      pattern: '',
       minLength: 1,
-      placeHolder: "Postal...",
-      type: "text",
-      errSelector: styles["login-error"],
-      errMessage: "Enter valid postal code...",
+      placeHolder: 'Postal...',
+      type: 'text',
+      errSelector: styles['login-error'],
+      errMessage: 'Enter valid postal code...',
     });
 
     const billFirstOption = option({
       className: styles.input__option,
-      textContent: "Country",
+      textContent: 'Country',
     });
-    billFirstOption.setAttribute("value", "");
+    billFirstOption.setAttribute('value', '');
 
     const billCountryInput = select(
       {
@@ -284,7 +276,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
         className: styles.input__option,
         textContent: val[1],
       });
-      anOption.setAttribute("value", val[0]);
+      anOption.setAttribute('value', val[0]);
       return anOption.getElement();
     });
 
@@ -293,7 +285,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
     const billAddress = fieldset(
       {
-        className: styles["form__bill-address"],
+        className: styles['form__bill-address'],
       },
       billStreetInput.getNode(),
       billCityInput.getNode(),
@@ -301,22 +293,22 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       billCountryInput,
     );
 
-    const inputBtn = input("", "", "", "", "submit", "", styles.input__submit);
+    const inputBtn = input('', '', '', '', 'submit', '', styles.input__submit);
 
-    const loginAnchor = document.createElement("a");
-    loginAnchor.textContent = "Log In";
-    loginAnchor.href = "#login-page";
+    const loginAnchor = document.createElement('a');
+    loginAnchor.textContent = 'Log In';
+    loginAnchor.href = '#login-page';
     loginAnchor.onclick = (e) => {
       e.preventDefault();
-      this.routing.navigate("login-page");
+      this.routing.navigate('login-page');
     };
     const loginLink = div(
-      { className: styles["login-link"], textContent: "Have an account?" },
+      { className: styles['login-link'], textContent: 'Have an account?' },
       loginAnchor,
     );
 
     super(
-      { tag: "form", className: styles.register__form },
+      { tag: 'form', className: styles.register__form },
       emailInput.getNode(),
       passwordWrapper.getNode(),
       firstNameInput.getNode(),
@@ -348,14 +340,9 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     this.postalInput = postalInput;
     this.routing = routing;
     this.spinner = spinner;
-    console.log(this.billAddress.getElement().childNodes);
     const handler = this.submitHandler.bind(this);
-    this.element.addEventListener("submit", handler);
-    this.billAddress.getElement().childNodes.forEach((item) => {
-      if (item instanceof HTMLDivElement)
-        (item.childNodes[0] as HTMLInputElement).required = false;
-      if (item instanceof HTMLSelectElement) item.required = false;
-    });
+    this.element.addEventListener('submit', handler);
+    this.setBillAddReq(false);
   }
 
   private async getAccTokenByCredentials() {
@@ -378,6 +365,15 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       );
     }
     return result;
+  }
+
+  private setBillAddReq(bool: boolean) {
+    /* toggles the billing address fields require attr */
+    this.billAddress.getElement().childNodes.forEach((item) => {
+      const el = item;
+      if (el instanceof HTMLDivElement) (el.childNodes[0] as HTMLInputElement).required = bool;
+      if (el instanceof HTMLSelectElement) el.required = bool;
+    });
   }
 
   private async reqCreateCustomer(accToken: string) {
@@ -404,7 +400,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       const errResponse = await resCreateCustomer.json();
       this.alertModal.getNode().showModal();
       this.alertModal.updateModal(
-        `Error: ${errResponse.error || "error message"}, ${errResponse.message}`,
+        `Error: ${errResponse.error || 'error message'}, ${errResponse.message}`,
       );
     }
     return result;
@@ -464,7 +460,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       }
       storage.setTokens(tokensByPass);
       this.spinner.hide();
-      this.routing.navigate("main-page");
+      this.routing.navigate('main-page');
       return;
     }
     this.spinner.hide();
@@ -475,9 +471,8 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputEl.errorElement.classList.add(styles.show);
     }
     const today = new Date();
-    const age =
-      today.getFullYear() -
-      new Date(this.birthDate.inputField.value).getFullYear();
+    const age = today.getFullYear()
+      - new Date(this.birthDate.inputField.value).getFullYear();
     const country = this.countryInput.getElement().value;
     const postalRegx = new RegExp(POSTALS[country][1]);
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;

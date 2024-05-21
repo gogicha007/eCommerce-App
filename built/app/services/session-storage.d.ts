@@ -1,4 +1,4 @@
-import { ITFSessionData } from '../interfaces/interfaces';
+import { ITFSessionData } from "../interfaces/interfaces";
 declare class SessionStorage {
     private storageKey;
     constructor(key: string);
