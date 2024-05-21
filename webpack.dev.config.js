@@ -1,10 +1,11 @@
-const path = require("path");
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-module.exports = {
-    mode: "development",
-    devtool: "inline-source-map",
-    devServer: {
-        static: path.resolve(__dirname, "../dist"),
-        historyApiFallback: true
-    },
+export const mode = "development";
+export const devtool = "inline-source-map";
+export const devServer = {
+    static: path.resolve(__dirname, "../dist"),
+    historyApiFallback: true
 };

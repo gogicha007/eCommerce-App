@@ -1,3 +1,1 @@
-module.exports = {
-    mode: "production",
-};
+export const mode = "production";
