@@ -1,23 +1,30 @@
 import API_KEYS from './services/ct-constants';
 import ElementCreator from './util/elementCreator';
 import LoginPage from './view/loginPage/loginView';
-import RegisterPage from './view/registerPage/retisterView';
+import RegisterPage from './view/registerPage/registerView';
 import Router from './util/router';
 import LocalStorage from './services/local-storage';
 import StartPage from './view/mainPage/mainView';
 import FailPage from './view/failPage/failView';
+import CatalogPage from './view/catalogPage/catalogView';
+import Root from './view/root/root';
 
 export default class App {
   routing: Router;
 
+  root: Root;
+
   constructor() {
     const routes = this.createView();
     this.routing = new Router(routes);
+    this.root = new Root(this.routing);
+    this.appendRoot();
   }
 
   loadEntryPage() {
-    const session = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
-    if (session.isLogged()) {
+    const storage = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
+    this.root.header.arrangeButtons();
+    if (storage.isLogged()) {
       console.log('is logged');
       this.routing.navigate('main-page');
     } else {
@@ -29,34 +36,46 @@ export default class App {
   createView() {
     return [
       {
+        path: 'catalog-page',
+        callback: () => {
+          this.addContent(new CatalogPage(this.routing));
+        },
+      },
+      {
         path: '404',
         callback: () => {
-          App.addContent(new FailPage(this.routing));
+          this.addContent(new FailPage(this.routing));
         },
       },
       {
         path: 'login-page',
         callback: () => {
-          App.addContent(new LoginPage(this.routing));
+          this.addContent(new LoginPage(this.routing));
         },
       },
       {
         path: 'main-page',
         callback: () => {
-          App.addContent(new StartPage(this.routing));
+          this.addContent(new StartPage(this.routing));
         },
       },
       {
         path: 'register-page',
         callback: () => {
-          App.addContent(new RegisterPage(this.routing));
+          this.addContent(new RegisterPage(this.routing));
         },
       },
     ];
   }
 
-  static addContent(content: ElementCreator) {
+  public appendRoot() {
     document.body.innerHTML = '';
-    document.body.append(content.getElement());
+    document.body.append(this.root.getElement());
+  }
+
+  public addContent(content: ElementCreator) {
+    this.root.header.arrangeButtons();
+    this.root.landing.getElement().innerHTML = '';
+    this.root.landing.append(content.getElement());
   }
 }
