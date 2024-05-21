@@ -1,4 +1,4 @@
-import POSTALS from '../services/postal-codes';
+import POSTALS from "../services/postal-codes";
 
 const CountryList = () => {
   const list = Object.keys(POSTALS).reduce((acc, val) => {

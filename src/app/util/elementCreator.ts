@@ -1,7 +1,7 @@
-import { notNullable } from './isNull';
+import { notNullable } from "./isNull";
 
 type Params<T extends HTMLElement = HTMLElement> = Partial<
-Omit<T, 'tagName'>
+  Omit<T, "tagName">
 > & {
   tag: keyof HTMLElementTagNameMap;
   textContent?: string;
@@ -9,7 +9,7 @@ Omit<T, 'tagName'>
   setInner?: string;
 };
 
-export type ParamsTags = Omit<Params, 'tag'>;
+export type ParamsTags = Omit<Params, "tag">;
 
 export default class ElementCreator<T extends HTMLElement = HTMLElement> {
   protected element: T;
