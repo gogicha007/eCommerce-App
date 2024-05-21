@@ -202,8 +202,16 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     checkInput.getElement().checked = true;
     checkInput.getElement().addEventListener('change', (e) => {
       if ((e.target as HTMLInputElement).checked) {
+        this.billAddress.getElement().childNodes.forEach((item) => {
+          if (item instanceof HTMLDivElement) (item.childNodes[0] as HTMLInputElement).required = false;
+          if (item instanceof HTMLSelectElement) item.required = false;
+        });
         this.billAddress.getElement().style.display = 'none';
       } else {
+        this.billAddress.getElement().childNodes.forEach((item) => {
+          if (item instanceof HTMLDivElement) (item.childNodes[0] as HTMLInputElement).required = true;
+          if (item instanceof HTMLSelectElement) item.required = true;
+        });
         this.billAddress.getElement().style.display = 'block';
       }
     });
@@ -338,9 +346,13 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     this.postalInput = postalInput;
     this.routing = routing;
     this.spinner = spinner;
-
+    console.log(this.billAddress.getElement().childNodes);
     const handler = this.submitHandler.bind(this);
     this.element.addEventListener('submit', handler);
+    this.billAddress.getElement().childNodes.forEach((item) => {
+      if (item instanceof HTMLDivElement) (item.childNodes[0] as HTMLInputElement).required = false;
+      if (item instanceof HTMLSelectElement) item.required = false;
+    });
   }
 
   private async getAccTokenByCredentials() {
@@ -420,6 +432,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
 
   private async submitHandler(event: Event) {
     event.preventDefault();
+
     this.spinner.show();
     if (this.validateFillForm()) {
       const accTokenData = await this.getAccTokenByCredentials();
