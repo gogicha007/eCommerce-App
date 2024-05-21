@@ -3,7 +3,7 @@ import button from '../../components/button';
 import { div } from '../../components/tags';
 import ElementCreator from '../../util/elementCreator';
 import Router from '../../util/router';
-import SessionStorage from '../../services/session-storage';
+import LocalStorage from '../../services/local-storage';
 import API_KEYS from '../../services/ct-constants';
 
 export default class StartPage extends ElementCreator {
@@ -12,11 +12,11 @@ export default class StartPage extends ElementCreator {
   constructor(routing: Router) {
     super(
       { tag: 'div', className: 'startPage' },
-      div({ className: styles.main__title, textContent: 'E-COMM' }),
+      div({ className: styles.main__title, textContent: 'E-COMM MAIN PAGE' }),
       button({
         txt: 'Log Out',
         onClick: () => {
-          const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
+          const session = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
           session.setNull();
           window.localStorage.clear();
           this.routing.navigate('login-page');

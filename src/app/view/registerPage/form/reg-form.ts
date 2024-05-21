@@ -17,7 +17,7 @@ import {
 } from '../../../services/ct-requests';
 import InputWrapper from '../../../components/input-wrapper';
 import Router from '../../../util/router';
-import SessionStorage from '../../../services/session-storage';
+import LocalStorage from '../../../services/local-storage';
 import Spinner from '../../../components/spinner/spinner';
 import CountryList from '../../../util/helpers';
 import POSTALS from '../../../services/postal-codes';
@@ -427,7 +427,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
         this.spinner.hide();
         return;
       }
-      const storage = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
+      const storage = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
 
       const customerData = await this.reqCreateCustomer(
         accTokenData.access_token,

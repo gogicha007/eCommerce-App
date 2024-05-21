@@ -6,7 +6,7 @@ import InputWrapper from '../../../components/input-wrapper';
 import { getTokensByPass } from '../../../services/ct-requests';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import Spinner from '../../../components/spinner/spinner';
-import SessionStorage from '../../../services/session-storage';
+import LocalStorage from '../../../services/local-storage';
 import API_KEYS from '../../../services/ct-constants';
 
 interface InputData {
@@ -120,7 +120,7 @@ export default class Form extends ElementCreator<HTMLFormElement> {
           token_expires_in: credentials.expires_in,
           refresh_token: credentials.refresh_token,
         };
-        const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
+        const session = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
         session.saveData(userData);
         session.setTokens(tokens);
         this.routing.navigate('main-page');
