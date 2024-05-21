@@ -1,8 +1,8 @@
-import AlertModal from "../../../components/alert-modal/alert-modal";
-import ElementCreator from "../../../util/elementCreator";
-import InputWrapper from "../../../components/input-wrapper";
-import Router from "../../../util/router";
-import Spinner from "../../../components/spinner/spinner";
+import AlertModal from '../../../components/alert-modal/alert-modal';
+import ElementCreator from '../../../util/elementCreator';
+import InputWrapper from '../../../components/input-wrapper';
+import Router from '../../../util/router';
+import Spinner from '../../../components/spinner/spinner';
 export default class RegForm extends ElementCreator<HTMLFormElement> {
     addressInput: InputWrapper;
     alertModal: AlertModal;
@@ -20,6 +20,7 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     spinner: Spinner;
     constructor(routing: Router);
     private getAccTokenByCredentials;
+    private setBillAddReq;
     private reqCreateCustomer;
     private reqTokensByPass;
     private submitHandler;
