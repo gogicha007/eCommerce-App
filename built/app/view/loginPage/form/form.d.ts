@@ -1,16 +1,23 @@
 import ElementCreator from '../../../util/elementCreator';
 import Router from '../../../util/router';
-interface inputData {
-    name: FormDataEntryValue | null | void;
-    surname: FormDataEntryValue | null | void;
+import InputWrapper from '../../../components/input-wrapper';
+import AlertModal from '../../../components/alert-modal/alert-modal';
+import Spinner from '../../../components/spinner/spinner';
+interface InputData {
+    email: FormDataEntryValue | null | void;
+    password: FormDataEntryValue | null | void;
 }
 export default class Form extends ElementCreator<HTMLFormElement> {
+    alertModal: AlertModal;
+    inputData: InputData;
+    loginInput: InputWrapper;
+    passwordInput: InputWrapper;
     routing: Router;
-    inputData: inputData;
+    spinner: Spinner;
     constructor(routing: Router);
     private submitHandler;
     setData(): void;
-    validateFillForm(): void;
+    validateFillForm(): boolean;
     saveData(): void;
 }
 export {};

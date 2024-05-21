@@ -1,4 +1,4 @@
-import ElementCreator from "../util/elementCreator";
+import ElementCreator from '../util/elementCreator';
 interface PropsButton {
     txt: string;
     onClick?: () => void;

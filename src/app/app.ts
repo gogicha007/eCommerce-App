@@ -3,7 +3,7 @@ import ElementCreator from './util/elementCreator';
 import LoginPage from './view/loginPage/loginView';
 import RegisterPage from './view/registerPage/retisterView';
 import Router from './util/router';
-import SessionStorage from './services/session-storage';
+import LocalStorage from './services/local-storage';
 import StartPage from './view/mainPage/mainView';
 
 export default class App {
@@ -15,7 +15,7 @@ export default class App {
   }
 
   loadEntryPage() {
-    const session = new SessionStorage(API_KEYS.CTP_CLIENT_ID);
+    const session = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
     if (session.isLogged()) {
       console.log('is logged');
       this.routing.navigate('main-page');
