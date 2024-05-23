@@ -1,7 +1,7 @@
 import styles from './header.module.css';
 import ElementCreator from '../../../util/elementCreator';
 import Router from '../../../util/router';
-import button from '../../../components/button';
+import anchor from '../../../components/anchor';
 import LocalStorage from '../../../services/local-storage';
 import API_KEYS from '../../../services/ct-constants';
 import { div } from '../../../components/tags';
@@ -24,23 +24,23 @@ export default class Header extends ElementCreator {
     logo.classList.add(styles.logo);
     logo.src = 'https://i.postimg.cc/v8XtFQKv/logo1.png';
 
-    const catalogBtn = button({
+    const catalogBtn = anchor({
       txt: 'Catalog',
       onClick: () => {
         this.routing.navigate('catalog-page');
       },
-      className: styles.nav__btn,
+      className: styles.header__btn,
     });
 
-    const loginBtn = button({
+    const loginBtn = anchor({
       txt: 'Log in',
       onClick: () => {
         this.routing.navigate('login-page');
       },
-      className: styles.nav__btn,
+      className: styles.header__btn,
     });
 
-    const logoutBtn = button({
+    const logoutBtn = anchor({
       txt: 'Log Out',
       onClick: () => {
         const storage = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
@@ -48,50 +48,50 @@ export default class Header extends ElementCreator {
         window.localStorage.clear();
         this.routing.navigate('login-page');
       },
-      className: styles.nav__btn,
+      className: styles.header__btn,
     });
 
-    const mainBtn = button({
+    const mainBtn = anchor({
       txt: 'Main',
       onClick: () => {
         this.routing.navigate('main-page');
       },
-      className: styles.nav__btn,
+      className: styles.header__btn,
     });
 
-    const signupBtn = button({
+    const signupBtn = anchor({
       txt: 'Sign Up',
       onClick: () => {
         this.routing.navigate('register-page');
       },
-      className: styles.nav__btn,
+      className: styles.header__btn,
     });
 
     const navButtons = div(
-      { className: styles['nav-buttons'] },
+      { className: styles.header__nav },
       mainBtn,
-      catalogBtn,
+      catalogBtn
     );
 
     const authButtons = div(
-      { className: styles['auth-buttons'] },
+      { className: styles.header__auth },
       loginBtn,
       logoutBtn,
-      signupBtn,
+      signupBtn
     );
 
     const headerContent = div(
       { className: styles.header__content },
       logo,
       navButtons,
-      authButtons,
+      authButtons
     );
     super(
       {
         tag: 'div',
         className: styles.header,
       },
-      headerContent,
+      headerContent
     );
 
     this.catalogBtn = catalogBtn;

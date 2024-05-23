@@ -13,21 +13,28 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 22px;
 }
 
-.auth-buttons {
+.header__auth {
+    width: 150px;
     display: flex;
-    gap: 5px;
-}
-.nav-buttons {
-    display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 
-.nav__btn {
-    height: 30px;
-    width: 100px;
+.header__nav {
+    display: flex;
+    gap: 15px;
+}
+
+.header__btn {
+    color: var(--bg-color);
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.header__btn:hover {
+    opacity: 70%;
 }
 .logo {
     width: 70px;
