@@ -8,5 +8,5 @@ export default class Header extends ElementCreator {
     mainBtn: ElementCreator<HTMLElement>;
     signupBtn: ElementCreator<HTMLElement>;
     constructor(routing: Router);
-    arrangeButtons(): void;
+    arrangeAuthButtons(): void;
 }

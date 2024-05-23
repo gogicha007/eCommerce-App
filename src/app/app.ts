@@ -23,7 +23,7 @@ export default class App {
 
   loadEntryPage() {
     const storage = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
-    this.root.header.arrangeButtons();
+    this.root.header.arrangeAuthButtons();
     if (storage.isLogged()) {
       console.log('is logged');
       this.routing.navigate('main-page');
@@ -36,15 +36,15 @@ export default class App {
   createView() {
     return [
       {
-        path: 'catalog-page',
-        callback: () => {
-          this.addContent(new CatalogPage(this.routing));
-        },
-      },
-      {
         path: '404',
         callback: () => {
           this.addContent(new FailPage(this.routing));
+        },
+      },
+      {
+        path: 'catalog-page',
+        callback: () => {
+          this.addContent(new CatalogPage(this.routing));
         },
       },
       {
@@ -74,7 +74,7 @@ export default class App {
   }
 
   public addContent(content: ElementCreator) {
-    this.root.header.arrangeButtons();
+    this.root.header.arrangeAuthButtons();
     this.root.landing.getElement().innerHTML = '';
     this.root.landing.append(content.getElement());
   }

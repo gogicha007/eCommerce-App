@@ -4,6 +4,7 @@ import Router from '../../../util/router';
 import button from '../../../components/button';
 import LocalStorage from '../../../services/local-storage';
 import API_KEYS from '../../../services/ct-constants';
+import { div } from '../../../components/tags';
 
 export default class Header extends ElementCreator {
   routing: Router;
@@ -19,6 +20,10 @@ export default class Header extends ElementCreator {
   signupBtn: ElementCreator<HTMLElement>;
 
   constructor(routing: Router) {
+    const logo = document.createElement('img');
+    logo.classList.add(styles.logo);
+    logo.src = 'https://i.postimg.cc/v8XtFQKv/logo1.png';
+
     const catalogBtn = button({
       txt: 'Catalog',
       onClick: () => {
@@ -61,16 +66,32 @@ export default class Header extends ElementCreator {
       },
       className: styles.nav__btn,
     });
+
+    const navButtons = div(
+      { className: styles['nav-buttons'] },
+      mainBtn,
+      catalogBtn,
+    );
+
+    const authButtons = div(
+      { className: styles['auth-buttons'] },
+      loginBtn,
+      logoutBtn,
+      signupBtn,
+    );
+
+    const headerContent = div(
+      { className: styles.header__content },
+      logo,
+      navButtons,
+      authButtons,
+    );
     super(
       {
         tag: 'div',
         className: styles.header,
       },
-      mainBtn,
-      catalogBtn,
-      loginBtn,
-      logoutBtn,
-      signupBtn,
+      headerContent,
     );
 
     this.catalogBtn = catalogBtn;
@@ -81,7 +102,7 @@ export default class Header extends ElementCreator {
     this.signupBtn = signupBtn;
   }
 
-  public arrangeButtons() {
+  public arrangeAuthButtons() {
     const storage = new LocalStorage(API_KEYS.CTP_CLIENT_ID);
     if (storage.isLogged()) {
       this.loginBtn.getElement().style.display = 'none';

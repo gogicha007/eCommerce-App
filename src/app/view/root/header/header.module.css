@@ -1,9 +1,26 @@
 .header {
-    padding: 20px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--accent-color)
+}
+
+.header__content {
+    padding: 10px 20px;
+    width: 80%;
+    max-width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 5px;
+}
+.nav-buttons {
+    display: flex;
     gap: 5px;
 }
 
@@ -11,4 +28,7 @@
     height: 30px;
     width: 100px;
     cursor: pointer;
+}
+.logo {
+    width: 70px;
 }
