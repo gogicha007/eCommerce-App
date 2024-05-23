@@ -72,7 +72,7 @@ export const legend = (
   ...children,
 );
 
-export const image = (props: {className: string, src: string}) => {
+export const image = (props: { className: string; src: string }) => {
   const imageComponent = new ElementCreator<HTMLImageElement>({
     tag: 'img',
   });

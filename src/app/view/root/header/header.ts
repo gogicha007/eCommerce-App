@@ -22,8 +22,8 @@ export default class Header extends ElementCreator {
   constructor(routing: Router) {
     const logo = image({
       className: styles.logo,
-      src: 'https://i.postimg.cc/v8XtFQKv/logo1.png'}
-    );
+      src: 'https://i.postimg.cc/v8XtFQKv/logo1.png',
+    });
 
     const catalogBtn = anchor({
       txt: 'Catalog',
@@ -71,28 +71,28 @@ export default class Header extends ElementCreator {
     const navButtons = div(
       { className: styles.header__nav },
       mainBtn,
-      catalogBtn
+      catalogBtn,
     );
 
     const authButtons = div(
       { className: styles.header__auth },
       loginBtn,
       logoutBtn,
-      signupBtn
+      signupBtn,
     );
 
     const headerContent = div(
       { className: styles.header__content },
       logo,
       navButtons,
-      authButtons
+      authButtons,
     );
     super(
       {
         tag: 'div',
         className: styles.header,
       },
-      headerContent
+      headerContent,
     );
 
     this.catalogBtn = catalogBtn;
