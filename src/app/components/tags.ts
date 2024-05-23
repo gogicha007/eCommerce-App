@@ -71,3 +71,12 @@ export const legend = (
   { tag: 'legend', ...props },
   ...children,
 );
+
+export const image = (props: {className: string, src: string}) => {
+  const imageComponent = new ElementCreator<HTMLImageElement>({
+    tag: 'img',
+  });
+  if (props.src) imageComponent.setAttribute('src', props.src);
+  if (props.className) imageComponent.addClass(props.className);
+  return imageComponent;
+};

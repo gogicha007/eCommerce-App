@@ -4,7 +4,7 @@ import Router from '../../../util/router';
 import anchor from '../../../components/anchor';
 import LocalStorage from '../../../services/local-storage';
 import API_KEYS from '../../../services/ct-constants';
-import { div } from '../../../components/tags';
+import { div, image } from '../../../components/tags';
 
 export default class Header extends ElementCreator {
   routing: Router;
@@ -20,9 +20,10 @@ export default class Header extends ElementCreator {
   signupBtn: ElementCreator<HTMLElement>;
 
   constructor(routing: Router) {
-    const logo = document.createElement('img');
-    logo.classList.add(styles.logo);
-    logo.src = 'https://i.postimg.cc/v8XtFQKv/logo1.png';
+    const logo = image({
+      className: styles.logo,
+      src: 'https://i.postimg.cc/v8XtFQKv/logo1.png'}
+    );
 
     const catalogBtn = anchor({
       txt: 'Catalog',
@@ -70,28 +71,28 @@ export default class Header extends ElementCreator {
     const navButtons = div(
       { className: styles.header__nav },
       mainBtn,
-      catalogBtn,
+      catalogBtn
     );
 
     const authButtons = div(
       { className: styles.header__auth },
       loginBtn,
       logoutBtn,
-      signupBtn,
+      signupBtn
     );
 
     const headerContent = div(
       { className: styles.header__content },
       logo,
       navButtons,
-      authButtons,
+      authButtons
     );
     super(
       {
         tag: 'div',
         className: styles.header,
       },
-      headerContent,
+      headerContent
     );
 
     this.catalogBtn = catalogBtn;
