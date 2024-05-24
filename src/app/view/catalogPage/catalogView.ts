@@ -49,7 +49,7 @@ export default class CatalogPage extends ElementCreator {
     const res = await queryProducts(token as string);
     if (res.status === 200) {
       this.data = await res.json();
-      getCardData(this.data)
+      getCardData(this.data);
       // console.log(this.data);
     } else {
       const errResponse = await res.json();
