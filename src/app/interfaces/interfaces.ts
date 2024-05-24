@@ -58,9 +58,10 @@ export interface ITFMap {
 }
 
 export interface ITFCardData {
+  id: string;
   img: string;
   name: string;
   description: string;
-  price: number;
+  price: number | null;
   discount?: number | null;
 }
