@@ -55,5 +55,4 @@ export default class CatalogPage extends ElementCreator {
     }
     this.spinner.hide();
   }
-
 }
