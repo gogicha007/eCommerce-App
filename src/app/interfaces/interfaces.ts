@@ -56,3 +56,11 @@ export interface ITFUpdateAddress {
 export interface ITFMap {
   [key: string]: string[];
 }
+
+export interface ITFCardData {
+  img: string;
+  name: string;
+  description: string;
+  price: number;
+  discount?: number | null;
+}
