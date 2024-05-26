@@ -2,10 +2,9 @@ import { ITFProdQuery } from '../interfaces/interfaces';
 
 export const getProdList = (data: Pick<ITFProdQuery, 'results'>) => {
   const cardData = data.results.map((val: any) => {
-    const priceObj =
-      val.masterData.current.masterVariant.prices.find(
-        (el: any) => el.value.currencyCode === 'EUR'
-      ) || null;
+    const priceObj = val.masterData.current.masterVariant.prices.find(
+      (el: any) => el.value.currencyCode === 'EUR',
+    ) || null;
     const cardObj = {
       id: val.id,
       name: val.masterData.current.name['en-US'],

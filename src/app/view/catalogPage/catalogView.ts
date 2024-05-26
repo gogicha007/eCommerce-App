@@ -9,7 +9,6 @@ import API_KEYS from '../../services/ct-constants';
 import { queryProducts } from '../../services/ct-requests';
 import AlertModal from '../../components/alert-modal/alert-modal';
 import CardList from './card-list/card-list';
-import Card from './card/card';
 
 export default class CatalogPage extends ElementCreator {
   alert: AlertModal;
@@ -53,8 +52,8 @@ export default class CatalogPage extends ElementCreator {
     const res = await queryProducts(token as string);
     if (res.status === 200) {
       this.data = await res.json();
-      this.prodList = new CardList(this.data)
-      this.append(this.prodList)
+      this.prodList = new CardList(this.data);
+      this.append(this.prodList);
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
