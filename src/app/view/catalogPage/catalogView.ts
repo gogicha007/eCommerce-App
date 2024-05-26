@@ -26,7 +26,7 @@ export default class CatalogPage extends ElementCreator {
     const spinner = new Spinner();
 
     super(
-      { tag: 'div', className: 'catalog' },
+      { tag: 'div', className: styles.catalog },
       div({ className: styles.catalog__title, textContent: 'Catalog Page' }),
       button({
         txt: 'get the list',

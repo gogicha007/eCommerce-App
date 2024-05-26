@@ -5,6 +5,7 @@ import AlertModal from '../../../components/alert-modal/alert-modal';
 import { getProdList } from '../../../services/data-handling';
 // import Card from '../card/card';
 import Spinner from '../../../components/spinner/spinner';
+import Card from '../card/card';
 
 export default class CardList extends ElementCreator {
   alert: AlertModal;
@@ -25,10 +26,12 @@ export default class CardList extends ElementCreator {
   }
 
   private makeList(data: Pick<ITFProdQuery, 'results'>) {
+    console.log(data);
     const prodList = getProdList(data);
     this.spinner.show();
     if (prodList) {
-      console.log(prodList);
+      const cardList = prodList.map((val) => new Card(val).getElement());
+      this.appendChildren(...cardList);
     } else {
       const errResponse = {
         error: '',

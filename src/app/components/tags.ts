@@ -5,15 +5,22 @@ export const div = (
   ...childs: (ElementCreator | HTMLElement | null)[]
 ) => new ElementCreator<HTMLDivElement>({ tag: 'div', ...props }, ...childs);
 
-export const ul = (
+export const fieldset = (
   props: ParamsTags,
-  ...childs: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLDivElement>({ tag: 'ul', ...props }, ...childs);
+  ...children: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLFieldSetElement>(
+  { tag: 'fieldset', ...props },
+  ...children,
+);
 
-export const label = (
-  props: ParamsTags,
-  ...childs: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLDivElement>({ tag: 'label', ...props }, ...childs);
+export const image = (props: { className: string; src: string }) => {
+  const imageComponent = new ElementCreator<HTMLImageElement>({
+    tag: 'img',
+  });
+  if (props.src) imageComponent.setAttribute('src', props.src);
+  if (props.className) imageComponent.addClass(props.className);
+  return imageComponent;
+};
 
 export const input = (
   name: string,
@@ -37,14 +44,16 @@ export const input = (
   return inputComponent;
 };
 
-export const select = (
+export const label = (
+  props: ParamsTags,
+  ...childs: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLDivElement>({ tag: 'label', ...props }, ...childs);
+
+export const legend = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLSelectElement>(
-  {
-    tag: 'select',
-    className: props.className,
-  },
+) => new ElementCreator<HTMLOptionElement>(
+  { tag: 'legend', ...props },
   ...children,
 );
 
@@ -56,27 +65,23 @@ export const option = (
   ...children,
 );
 
-export const fieldset = (
+export const paragraph = (
+  props: ParamsTags,
+  ...childs: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLDivElement>({ tag: 'p', ...props }, ...childs);
+
+export const select = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLFieldSetElement>(
-  { tag: 'fieldset', ...props },
+) => new ElementCreator<HTMLSelectElement>(
+  {
+    tag: 'select',
+    className: props.className,
+  },
   ...children,
 );
 
-export const legend = (
+export const ul = (
   props: ParamsTags,
-  ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLOptionElement>(
-  { tag: 'legend', ...props },
-  ...children,
-);
-
-export const image = (props: { className: string; src: string }) => {
-  const imageComponent = new ElementCreator<HTMLImageElement>({
-    tag: 'img',
-  });
-  if (props.src) imageComponent.setAttribute('src', props.src);
-  if (props.className) imageComponent.addClass(props.className);
-  return imageComponent;
-};
+  ...childs: (ElementCreator | HTMLElement | null)[]
+) => new ElementCreator<HTMLDivElement>({ tag: 'ul', ...props }, ...childs);
