@@ -65,3 +65,11 @@ export interface ITFCardData {
   price: number | null;
   discount?: number | null;
 }
+
+export interface ITFProdQuery {
+  count: number;
+  limit: number;
+  offset: number;
+  results: any[];
+  total: number;
+}

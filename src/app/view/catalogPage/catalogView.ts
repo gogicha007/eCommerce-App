@@ -8,12 +8,15 @@ import LocalStorage from '../../services/local-storage';
 import API_KEYS from '../../services/ct-constants';
 import { queryProducts } from '../../services/ct-requests';
 import AlertModal from '../../components/alert-modal/alert-modal';
-import { getCardData } from '../../services/data-handling';
+import CardList from './card-list/card-list';
+import Card from './card/card';
 
 export default class CatalogPage extends ElementCreator {
   alert: AlertModal;
 
   data: any | null;
+
+  prodList: CardList | null;
 
   routing: Router;
 
@@ -38,6 +41,7 @@ export default class CatalogPage extends ElementCreator {
     );
     this.alert = alert;
     this.data = null;
+    this.prodList = null;
     this.routing = routing;
     this.spinner = spinner;
   }
@@ -49,8 +53,8 @@ export default class CatalogPage extends ElementCreator {
     const res = await queryProducts(token as string);
     if (res.status === 200) {
       this.data = await res.json();
-      getCardData(this.data);
-      // console.log(this.data);
+      this.prodList = new CardList(this.data)
+      this.append(this.prodList)
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();

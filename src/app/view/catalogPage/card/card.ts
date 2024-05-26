@@ -27,7 +27,7 @@ export default class Card extends ElementCreator {
     });
 
     super(
-      { tag: 'li', className: styles.card },
+      { tag: 'ul', className: styles.card },
       img,
       name,
       description,

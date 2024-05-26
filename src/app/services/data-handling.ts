@@ -1,10 +1,12 @@
-export const getCardData = (data: any) => {
-  console.log(data.results);
+import { ITFProdQuery } from '../interfaces/interfaces';
+
+export const getProdList = (data: Pick<ITFProdQuery, 'results'>) => {
   const cardData = data.results.map((val: any) => {
-    const priceObj = val.masterData.current.masterVariant.prices.find(
-      (el: any) => el.value.currencyCode === 'EUR',
-    ) || null;
-    const d = {
+    const priceObj =
+      val.masterData.current.masterVariant.prices.find(
+        (el: any) => el.value.currencyCode === 'EUR'
+      ) || null;
+    const cardObj = {
       id: val.id,
       name: val.masterData.current.name['en-US'],
       description: val.masterData.current.description['en-US'],
@@ -12,10 +14,9 @@ export const getCardData = (data: any) => {
       price: priceObj.value.centAmount,
       discount: null,
     };
-    return d;
+    return cardObj;
   });
-  console.log(cardData);
-  return cardData;
+  return cardData || null;
 };
 
 export const getProductData = (id: string) => {
