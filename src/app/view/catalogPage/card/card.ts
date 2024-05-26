@@ -43,10 +43,10 @@ export default class Card extends ElementCreator {
       { tag: 'ul', className: styles.card },
       img,
       name,
-      description,
-      expandBtn,
       price,
       discount,
+      description,
+      expandBtn,
     );
     this.setAttribute('data-id', data.id);
   }

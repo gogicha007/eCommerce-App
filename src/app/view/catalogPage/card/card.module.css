@@ -36,12 +36,14 @@
 }
 
 .expand-btn {
+  height: 20px;
+  position: relative;
   appearance: none;
   border: 1px solid black;
-  padding: 0.5em;
   border-radius: 0.25em;
   cursor: pointer;
-  margin-tom: 1rem;
+  margin-top: 1rem;
+  display: flex;
 }
 
 .expand-btn:hover {
@@ -49,13 +51,16 @@
 }
 
 .expand-btn::before {
-  content: 'Expand';
+  position: absolute;
+  right: 50%;
+  top: 0;
+  content: '\2BC6';
 }
 
 .expand-btn:checked::before {
-    content:'Collapse'
+  content: '\2BC5';
 }
 
 .card__description:has(+ .expand-btn:checked) {
-    max-height: none;
+  max-height: none;
 }
