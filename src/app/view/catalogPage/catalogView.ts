@@ -1,5 +1,4 @@
 import styles from './catalog.module.css';
-import { div } from '../../components/tags';
 import button from '../../components/button';
 import ElementCreator from '../../util/elementCreator';
 import Router from '../../util/router';
@@ -27,7 +26,6 @@ export default class CatalogPage extends ElementCreator {
 
     super(
       { tag: 'div', className: styles.catalog },
-      div({ className: styles.catalog__title, textContent: 'Catalog Page' }),
       button({
         txt: 'get the list',
         onClick: () => {

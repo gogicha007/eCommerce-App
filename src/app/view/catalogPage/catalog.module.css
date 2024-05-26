@@ -1,9 +1,14 @@
 .catalog {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
-
-
 
 .catalog__title {
     
+}
+
+.catalog__btn {
+    width: 100px;
 }
