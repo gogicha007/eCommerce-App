@@ -82,9 +82,35 @@ export const updateCustomer = async (data: ITFUpdateAddress) => {
   return response;
 };
 
+export const queryCategories = async (token: string) => {
+  const response = await fetch(
+    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/categories`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response;
+};
+
 export const queryProducts = async (token: string) => {
   const response = await fetch(
     `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/products`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response;
+};
+
+export const queryProductDiscounts = async (token: string) => {
+  const response = await fetch(
+    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/product-discounts`,
     {
       method: 'GET',
       headers: {

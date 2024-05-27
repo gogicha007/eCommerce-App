@@ -3,7 +3,6 @@ import ElementCreator from '../../../util/elementCreator';
 import { ITFProdQuery } from '../../../interfaces/interfaces';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import { getProdList } from '../../../services/data-handling';
-// import Card from '../card/card';
 import Spinner from '../../../components/spinner/spinner';
 import Card from '../card/card';
 
@@ -21,6 +20,7 @@ export default class CardList extends ElementCreator {
 
     this.alert = alert;
     this.spinner = spinner;
+
     this.data = data;
     this.makeList(data);
   }

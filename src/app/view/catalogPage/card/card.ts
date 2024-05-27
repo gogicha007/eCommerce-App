@@ -6,6 +6,8 @@ import ElementCreator from '../../../util/elementCreator';
 import { ITFCardData } from '../../../interfaces/interfaces';
 
 export default class Card extends ElementCreator {
+  productData: any | null;
+
   constructor(data: ITFCardData) {
     const img = image({
       className: styles.card__image,
@@ -49,5 +51,6 @@ export default class Card extends ElementCreator {
       expandBtn,
     );
     this.setAttribute('data-id', data.id);
+    this.productData = null;
   }
 }

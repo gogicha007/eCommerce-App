@@ -54,13 +54,14 @@ export interface ITFUpdateAddress {
 }
 
 export interface ITFMap {
-  [key: string]: string[];
+  [key: string]: string | string[];
 }
 
 export interface ITFCardData {
   id: string;
   img: string;
   name: string;
+  categoryIds?: string[];
   description: string;
   price: number | null;
   discount?: number | null;
