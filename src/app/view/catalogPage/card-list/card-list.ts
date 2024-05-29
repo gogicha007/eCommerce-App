@@ -1,6 +1,6 @@
 import styles from './cart-list.module.css';
 import ElementCreator from '../../../util/elementCreator';
-import { ITFProdQuery } from '../../../interfaces/interfaces';
+import { ITFProdQuery, ITFMap } from '../../../interfaces/interfaces';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import { getProdList } from '../../../services/data-handling';
 import Spinner from '../../../components/spinner/spinner';
@@ -13,7 +13,7 @@ export default class CardList extends ElementCreator {
 
   spinner: Spinner;
 
-  constructor(data: Pick<ITFProdQuery, 'results'>) {
+  constructor(data: Pick<ITFProdQuery, 'results'>, categoryObj: ITFMap) {
     const alert = new AlertModal();
     const spinner = new Spinner();
     super({ tag: 'li', className: styles['card-list'] });
@@ -22,12 +22,12 @@ export default class CardList extends ElementCreator {
     this.spinner = spinner;
 
     this.data = data;
-    this.makeList(data);
+    this.makeList(data, categoryObj);
   }
 
-  private makeList(data: Pick<ITFProdQuery, 'results'>) {
+  private makeList(data: Pick<ITFProdQuery, 'results'>, categoryObj: ITFMap) {
     console.log(data);
-    const prodList = getProdList(data);
+    const prodList = getProdList(data, categoryObj);
     this.spinner.show();
     if (prodList) {
       const cardList = prodList.map((val) => new Card(val).getElement());

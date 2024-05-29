@@ -82,9 +82,13 @@ export const updateCustomer = async (data: ITFUpdateAddress) => {
   return response;
 };
 
-export const queryCategories = async (token: string) => {
+export const queryCategories = async (
+  token: string,
+  limit: null | number = null,
+) => {
+  const path = limit ? `categories?limit=${limit}` : 'categories';
   const response = await fetch(
-    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/categories`,
+    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/${path}`,
     {
       method: 'GET',
       headers: {
