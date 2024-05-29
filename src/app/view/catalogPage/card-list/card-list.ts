@@ -18,7 +18,7 @@ export default class CardList extends ElementCreator {
   constructor(
     data: Pick<ITFProdQuery, 'results'>,
     categoryObj: ITFMap,
-    discounts: any[]
+    discounts: any[],
   ) {
     const alert = new AlertModal();
     const spinner = new Spinner();
@@ -35,7 +35,7 @@ export default class CardList extends ElementCreator {
   private makeList(
     data: Pick<ITFProdQuery, 'results'>,
     categoryObj: ITFMap,
-    discounts: any[]
+    discounts: any[],
   ) {
     const prodList = getProdList(data, categoryObj, discounts);
     this.spinner.show();
@@ -51,7 +51,7 @@ export default class CardList extends ElementCreator {
       };
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`
+        `Error: ${errResponse.error}, ${errResponse.message}`,
       );
     }
     this.spinner.hide();

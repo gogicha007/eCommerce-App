@@ -1,5 +1,7 @@
 import styles from './card.module.css';
-import { div, image, input, paragraph } from '../../../components/tags';
+import {
+  div, image, input, paragraph,
+} from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { ITFCardData } from '../../../interfaces/interfaces';
 
@@ -29,7 +31,7 @@ export default class Card extends ElementCreator {
       '',
       'checkbox',
       '',
-      styles['expand-btn']
+      styles['expand-btn'],
     );
     const formatPrice = Intl.NumberFormat(undefined, {
       style: 'currency',
@@ -52,7 +54,7 @@ export default class Card extends ElementCreator {
       price,
       discount,
       description,
-      expandBtn
+      expandBtn,
     );
     this.setAttribute('data-id', data.id);
     this.data = data;

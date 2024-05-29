@@ -43,7 +43,7 @@ export default class CatalogPage extends ElementCreator {
         className: styles.catalog__btn,
       }),
       alert.getNode(),
-      spinner.getNode()
+      spinner.getNode(),
     );
     this.alert = alert;
     this.prodData = null;
@@ -68,13 +68,13 @@ export default class CatalogPage extends ElementCreator {
           ...obj,
           [item.id as string]: item.key,
         }),
-        {}
+        {},
       );
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`
+        `Error: ${errResponse.error}, ${errResponse.message}`,
       );
     }
     this.spinner.hide();
@@ -93,7 +93,7 @@ export default class CatalogPage extends ElementCreator {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`
+        `Error: ${errResponse.error}, ${errResponse.message}`,
       );
     }
     this.spinner.hide();
@@ -109,14 +109,14 @@ export default class CatalogPage extends ElementCreator {
       this.prodList = new CardList(
         this.prodData,
         this.categories,
-        this.discounts as any[]
+        this.discounts as any[],
       );
       this.append(this.prodList);
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`
+        `Error: ${errResponse.error}, ${errResponse.message}`,
       );
     }
     this.spinner.hide();

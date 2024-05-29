@@ -3,17 +3,15 @@ import { ITFProdQuery, ITFMap } from '../interfaces/interfaces';
 export const getProdList = (
   data: Pick<ITFProdQuery, 'results'>,
   categoryObj: ITFMap,
-  discounts: any[]
+  discounts: any[],
 ) => {
   const cardData = data.results.map((val) => {
-    const priceObj =
-      val.masterData.current.masterVariant.prices.find(
-        (el: any) => el.value.currencyCode === 'EUR'
-      ) || null;
-    const categoryIdArr =
-      val.masterData.current.categories.map((cat: ITFMap) => cat.id) || null;
+    const priceObj = val.masterData.current.masterVariant.prices.find(
+      (el: any) => el.value.currencyCode === 'EUR',
+    ) || null;
+    const categoryIdArr = val.masterData.current.categories.map((cat: ITFMap) => cat.id) || null;
     const categoryKeysArr = val.masterData.current.categories.map(
-      (cat: ITFMap) => categoryObj[cat.id as string]
+      (cat: ITFMap) => categoryObj[cat.id as string],
     );
     let discount: null | number = null;
     if (discounts) {
@@ -22,14 +20,12 @@ export const getProdList = (
         const key = arr[arr.length - 1].replaceAll('"', '');
         if (categoryKeysArr.includes(key)) {
           if (dis.value.type === 'relative') {
-            discount =
-              (priceObj.value.centAmount -
-                (priceObj.value.centAmount * dis.value.permyriad) / 10000) /
-              100;
+            discount = (priceObj.value.centAmount
+                - (priceObj.value.centAmount * dis.value.permyriad) / 10000)
+              / 100;
           }
           if (dis.value.type === 'absolute') {
-            discount =
-              (priceObj.value.centAmount - dis.value.money.centAmount) / 100;
+            discount = (priceObj.value.centAmount - dis.value.money.centAmount) / 100;
           }
         }
       });
@@ -41,7 +37,7 @@ export const getProdList = (
       img: val.masterData.current.masterVariant.images[0].url || '',
       price: priceObj.value.centAmount / 100,
       currency: priceObj.value.currencyCode,
-      discount: discount,
+      discount,
       categoryIds: categoryIdArr,
       categoryKeys: categoryKeysArr,
     };
