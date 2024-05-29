@@ -114,7 +114,7 @@ export const queryProducts = async (token: string) => {
 
 export const queryProductDiscounts = async (token: string) => {
   const response = await fetch(
-    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/product-discounts`,
+    `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/product-discounts?limit=500`,
     {
       method: 'GET',
       headers: {

@@ -9,11 +9,17 @@ import Card from '../card/card';
 export default class CardList extends ElementCreator {
   alert: AlertModal;
 
-  data: any | null;
+  cardsList: Card[] | null;
+
+  data: Pick<ITFProdQuery, 'results'> | null;
 
   spinner: Spinner;
 
-  constructor(data: Pick<ITFProdQuery, 'results'>, categoryObj: ITFMap) {
+  constructor(
+    data: Pick<ITFProdQuery, 'results'>,
+    categoryObj: ITFMap,
+    discounts: any[]
+  ) {
     const alert = new AlertModal();
     const spinner = new Spinner();
     super({ tag: 'li', className: styles['card-list'] });
@@ -22,16 +28,22 @@ export default class CardList extends ElementCreator {
     this.spinner = spinner;
 
     this.data = data;
-    this.makeList(data, categoryObj);
+    this.cardsList = null;
+    this.makeList(data, categoryObj, discounts);
   }
 
-  private makeList(data: Pick<ITFProdQuery, 'results'>, categoryObj: ITFMap) {
-    console.log(data);
-    const prodList = getProdList(data, categoryObj);
+  private makeList(
+    data: Pick<ITFProdQuery, 'results'>,
+    categoryObj: ITFMap,
+    discounts: any[]
+  ) {
+    const prodList = getProdList(data, categoryObj, discounts);
     this.spinner.show();
     if (prodList) {
-      const cardList = prodList.map((val) => new Card(val).getElement());
+      this.cardsList = prodList.map((val) => new Card(val));
+      const cardList = this.cardsList.map((val) => val.getElement());
       this.appendChildren(...cardList);
+      console.log(this.cardsList);
     } else {
       const errResponse = {
         error: '',
@@ -39,7 +51,7 @@ export default class CardList extends ElementCreator {
       };
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`,
+        `Error: ${errResponse.error}, ${errResponse.message}`
       );
     }
     this.spinner.hide();

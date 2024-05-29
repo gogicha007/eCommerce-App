@@ -21,7 +21,7 @@ export default class CatalogPage extends ElementCreator {
 
   prodData: any | null;
 
-  discounts: any | null;
+  discounts: any[] | null;
 
   prodList: CardList | null;
 
@@ -43,7 +43,7 @@ export default class CatalogPage extends ElementCreator {
         className: styles.catalog__btn,
       }),
       alert.getNode(),
-      spinner.getNode(),
+      spinner.getNode()
     );
     this.alert = alert;
     this.prodData = null;
@@ -68,14 +68,13 @@ export default class CatalogPage extends ElementCreator {
           ...obj,
           [item.id as string]: item.key,
         }),
-        {},
+        {}
       );
-      console.log(this.categories);
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`,
+        `Error: ${errResponse.error}, ${errResponse.message}`
       );
     }
     this.spinner.hide();
@@ -87,12 +86,14 @@ export default class CatalogPage extends ElementCreator {
     const token = storage.getData().access_token;
     const res = await queryProductDiscounts(token as string);
     if (res.status === 200) {
-      this.discounts = await res.json();
+      const discounts = await res.json();
+      if (discounts.results.length !== 0) this.discounts = discounts.results;
+      console.log(this.discounts);
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`,
+        `Error: ${errResponse.error}, ${errResponse.message}`
       );
     }
     this.spinner.hide();
@@ -105,13 +106,17 @@ export default class CatalogPage extends ElementCreator {
     const res = await queryProducts(token as string);
     if (res.status === 200) {
       this.prodData = await res.json();
-      this.prodList = new CardList(this.prodData, this.categories);
+      this.prodList = new CardList(
+        this.prodData,
+        this.categories,
+        this.discounts as any[]
+      );
       this.append(this.prodList);
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
       this.alert.updateModal(
-        `Error: ${errResponse.error}, ${errResponse.message}`,
+        `Error: ${errResponse.error}, ${errResponse.message}`
       );
     }
     this.spinner.hide();

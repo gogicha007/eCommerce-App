@@ -65,6 +65,7 @@ export interface ITFCardData {
   categoryKeys?: string[];
   description: string;
   price: number | null;
+  currency: string;
   discount?: number | null;
 }
 

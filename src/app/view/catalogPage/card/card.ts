@@ -1,12 +1,12 @@
 import styles from './card.module.css';
-import {
-  div, image, input, paragraph,
-} from '../../../components/tags';
+import { div, image, input, paragraph } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { ITFCardData } from '../../../interfaces/interfaces';
 
 export default class Card extends ElementCreator {
   productData: any | null;
+
+  data: ITFCardData;
 
   constructor(data: ITFCardData) {
     const img = image({
@@ -29,13 +29,17 @@ export default class Card extends ElementCreator {
       '',
       'checkbox',
       '',
-      styles['expand-btn'],
+      styles['expand-btn']
     );
-
+    const formatPrice = Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: data.currency,
+    }).format(data.price as number);
     const price = div({
       className: styles.card__price,
-      textContent: `${data.price}`,
+      textContent: `${formatPrice}`,
     });
+
     const discount = div({
       className: styles.card__discount,
       textContent: `${data.discount}`,
@@ -48,9 +52,10 @@ export default class Card extends ElementCreator {
       price,
       discount,
       description,
-      expandBtn,
+      expandBtn
     );
     this.setAttribute('data-id', data.id);
+    this.data = data;
     this.productData = null;
   }
 }
