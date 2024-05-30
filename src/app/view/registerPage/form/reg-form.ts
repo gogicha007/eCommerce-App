@@ -19,7 +19,7 @@ import InputWrapper from '../../../components/input-wrapper';
 import Router from '../../../util/router';
 import LocalStorage from '../../../services/local-storage';
 import Spinner from '../../../components/spinner/spinner';
-import {CountryList} from '../../../util/helpers';
+import { CountryList } from '../../../util/helpers';
 import POSTALS from '../../../services/postal-codes';
 import { ITFLoginData } from '../../../interfaces/interfaces';
 

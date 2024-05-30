@@ -45,10 +45,7 @@ export default class Card extends ElementCreator {
   }
 
   private priceElement() {
-    const fPrice = FormatPrice(
-      this.data.currency,
-      this.data.price as number,
-    );
+    const fPrice = FormatPrice(this.data.currency, this.data.price as number);
 
     let element = div({
       className: styles.card__price,
