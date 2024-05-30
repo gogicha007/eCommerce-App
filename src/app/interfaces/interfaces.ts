@@ -67,6 +67,7 @@ export interface ITFCardData {
   price: number | null;
   currency: string;
   discount?: number | null;
+  discountName?: string | null;
 }
 
 export interface ITFProdQuery {

@@ -4,6 +4,7 @@ import {
 } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { ITFCardData } from '../../../interfaces/interfaces';
+import { FormatPrice } from '../../../util/helpers';
 
 export default class Card extends ElementCreator {
   productData: any | null;
@@ -33,31 +34,57 @@ export default class Card extends ElementCreator {
       '',
       styles['expand-btn'],
     );
-    const formatPrice = Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: data.currency,
-    }).format(data.price as number);
-    const price = div({
-      className: styles.card__price,
-      textContent: `${formatPrice}`,
-    });
 
-    const discount = div({
-      className: styles.card__discount,
-      textContent: `${data.discount}`,
-    });
+    super({ tag: 'ul', className: styles.card }, img, name);
 
-    super(
-      { tag: 'ul', className: styles.card },
-      img,
-      name,
-      price,
-      discount,
-      description,
-      expandBtn,
-    );
     this.setAttribute('data-id', data.id);
     this.data = data;
-    this.productData = null;
+    const priceContainer = this.priceElement();
+    this.append(priceContainer);
+    this.appendChildren(...[description, expandBtn]);
+  }
+
+  private priceElement() {
+    const fPrice = FormatPrice(
+      this.data.currency,
+      this.data.price as number,
+    );
+
+    let element = div({
+      className: styles.card__price,
+      textContent: `${fPrice}`,
+    });
+
+    if (this.data.discount) {
+      const formatDiscount = FormatPrice(
+        this.data.currency,
+        this.data.discount,
+      );
+
+      const formatPrice = FormatPrice(
+        this.data.currency,
+        this.data.price as number,
+      );
+
+      const prevPrice = div({
+        className: styles.card__price_prev,
+        textContent: `${formatPrice}`,
+      });
+      prevPrice.setAttribute('title', this.data.discountName as string);
+
+      const discountPrice = div({
+        className: styles.card__discount,
+        textContent: `${formatDiscount}`,
+      });
+
+      element = div(
+        {
+          className: styles['card__price-wrapper'],
+        },
+        discountPrice,
+        prevPrice,
+      );
+    }
+    return element;
   }
 }

@@ -43,7 +43,6 @@ export default class CardList extends ElementCreator {
       this.cardsList = prodList.map((val) => new Card(val));
       const cardList = this.cardsList.map((val) => val.getElement());
       this.appendChildren(...cardList);
-      console.log(this.cardsList);
     } else {
       const errResponse = {
         error: '',

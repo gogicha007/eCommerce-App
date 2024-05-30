@@ -14,6 +14,7 @@ export const getProdList = (
       (cat: ITFMap) => categoryObj[cat.id as string],
     );
     let discount: null | number = null;
+    let discountName: null | string = null;
     if (discounts) {
       discounts.forEach((dis) => {
         const arr = dis.predicate.split(' ');
@@ -27,6 +28,7 @@ export const getProdList = (
           if (dis.value.type === 'absolute') {
             discount = (priceObj.value.centAmount - dis.value.money.centAmount) / 100;
           }
+          discountName = dis.name['en-US'];
         }
       });
     }
@@ -38,6 +40,7 @@ export const getProdList = (
       price: priceObj.value.centAmount / 100,
       currency: priceObj.value.currencyCode,
       discount,
+      discountName,
       categoryIds: categoryIdArr,
       categoryKeys: categoryKeysArr,
     };

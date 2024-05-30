@@ -88,7 +88,6 @@ export default class CatalogPage extends ElementCreator {
     if (res.status === 200) {
       const discounts = await res.json();
       if (discounts.results.length !== 0) this.discounts = discounts.results;
-      console.log(this.discounts);
     } else {
       const errResponse = await res.json();
       this.alert.getNode().showModal();
