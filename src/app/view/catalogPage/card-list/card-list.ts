@@ -1,36 +1,47 @@
 import styles from './cart-list.module.css';
 import ElementCreator from '../../../util/elementCreator';
-import { ITFProdQuery } from '../../../interfaces/interfaces';
+import { ITFProdQuery, ITFMap } from '../../../interfaces/interfaces';
 import AlertModal from '../../../components/alert-modal/alert-modal';
 import { getProdList } from '../../../services/data-handling';
-// import Card from '../card/card';
 import Spinner from '../../../components/spinner/spinner';
 import Card from '../card/card';
 
 export default class CardList extends ElementCreator {
   alert: AlertModal;
 
-  data: any | null;
+  cardsList: Card[] | null;
+
+  data: Pick<ITFProdQuery, 'results'> | null;
 
   spinner: Spinner;
 
-  constructor(data: Pick<ITFProdQuery, 'results'>) {
+  constructor(
+    data: Pick<ITFProdQuery, 'results'>,
+    categoryObj: ITFMap,
+    discounts: any[],
+  ) {
     const alert = new AlertModal();
     const spinner = new Spinner();
     super({ tag: 'li', className: styles['card-list'] });
 
     this.alert = alert;
     this.spinner = spinner;
+
     this.data = data;
-    this.makeList(data);
+    this.cardsList = null;
+    this.makeList(data, categoryObj, discounts);
   }
 
-  private makeList(data: Pick<ITFProdQuery, 'results'>) {
-    console.log(data);
-    const prodList = getProdList(data);
+  private makeList(
+    data: Pick<ITFProdQuery, 'results'>,
+    categoryObj: ITFMap,
+    discounts: any[],
+  ) {
+    const prodList = getProdList(data, categoryObj, discounts);
     this.spinner.show();
     if (prodList) {
-      const cardList = prodList.map((val) => new Card(val).getElement());
+      this.cardsList = prodList.map((val) => new Card(val));
+      const cardList = this.cardsList.map((val) => val.getElement());
       this.appendChildren(...cardList);
     } else {
       const errResponse = {

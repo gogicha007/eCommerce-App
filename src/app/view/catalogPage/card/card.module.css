@@ -11,6 +11,24 @@
   gap: 5px;
 }
 
+.card__image {
+  width: 100%;
+}
+
+.card__name {
+
+}
+
+.card__price_prev {
+  text-decoration: line-through;
+  opacity: 0.7
+}
+
+.card__price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .card__description {
   --max-lines: 5;
   --line-height: 1.4;
@@ -31,9 +49,6 @@
   background: linear-gradient(to bottom, transparent, white);
 }
 
-.card__image {
-  width: 100%;
-}
 
 .expand-btn {
   height: 20px;
