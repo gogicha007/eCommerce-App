@@ -1,7 +1,7 @@
 import { notNullable } from './isNull';
 
 type Params<T extends HTMLElement = HTMLElement> = Partial<
-Omit<T, 'tagName'>
+  Omit<T, 'tagName'>
 > & {
   tag: keyof HTMLElementTagNameMap;
   textContent?: string;

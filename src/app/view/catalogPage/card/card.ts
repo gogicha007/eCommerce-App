@@ -1,7 +1,5 @@
 import styles from './card.module.css';
-import {
-  div, image, input, paragraph,
-} from '../../../components/tags';
+import { div, image, input, paragraph } from '../../../components/tags';
 import ElementCreator from '../../../util/elementCreator';
 import { ITFCardData } from '../../../interfaces/interfaces';
 import { FormatPrice } from '../../../util/helpers';

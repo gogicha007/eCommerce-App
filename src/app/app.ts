@@ -8,6 +8,7 @@ import StartPage from './view/mainPage/mainView';
 import FailPage from './view/failPage/failView';
 import CatalogPage from './view/catalogPage/catalogView';
 import Root from './view/root/root';
+import ProfilePage from './view/profilePage/profileView';
 
 export default class App {
   routing: Router;
@@ -63,6 +64,12 @@ export default class App {
         path: 'register-page',
         callback: () => {
           this.addContent(new RegisterPage(this.routing));
+        },
+      },
+      {
+        path: 'profile-page',
+        callback: () => {
+          this.addContent(new ProfilePage(this.routing));
         },
       },
     ];

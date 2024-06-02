@@ -6,10 +6,12 @@ export const getProdList = (
   discounts: any[],
 ) => {
   const cardData = data.results.map((val) => {
-    const priceObj = val.masterData.current.masterVariant.prices.find(
-      (el: any) => el.value.currencyCode === 'EUR',
-    ) || null;
-    const categoryIdArr = val.masterData.current.categories.map((cat: ITFMap) => cat.id) || null;
+    const priceObj =
+      val.masterData.current.masterVariant.prices.find(
+        (el: any) => el.value.currencyCode === 'EUR',
+      ) || null;
+    const categoryIdArr =
+      val.masterData.current.categories.map((cat: ITFMap) => cat.id) || null;
     const categoryKeysArr = val.masterData.current.categories.map(
       (cat: ITFMap) => categoryObj[cat.id as string],
     );
@@ -21,12 +23,14 @@ export const getProdList = (
         const key = arr[arr.length - 1].replaceAll('"', '');
         if (categoryKeysArr.includes(key)) {
           if (dis.value.type === 'relative') {
-            discount = (priceObj.value.centAmount
-                - (priceObj.value.centAmount * dis.value.permyriad) / 10000)
-              / 100;
+            discount =
+              (priceObj.value.centAmount -
+                (priceObj.value.centAmount * dis.value.permyriad) / 10000) /
+              100;
           }
           if (dis.value.type === 'absolute') {
-            discount = (priceObj.value.centAmount - dis.value.money.centAmount) / 100;
+            discount =
+              (priceObj.value.centAmount - dis.value.money.centAmount) / 100;
           }
           discountName = dis.name['en-US'];
         }

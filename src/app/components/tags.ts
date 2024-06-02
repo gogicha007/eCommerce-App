@@ -8,10 +8,11 @@ export const div = (
 export const fieldset = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLFieldSetElement>(
-  { tag: 'fieldset', ...props },
-  ...children,
-);
+) =>
+  new ElementCreator<HTMLFieldSetElement>(
+    { tag: 'fieldset', ...props },
+    ...children,
+  );
 
 export const image = (props: { className: string; src: string }) => {
   const imageComponent = new ElementCreator<HTMLImageElement>({
@@ -52,18 +53,20 @@ export const label = (
 export const legend = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLOptionElement>(
-  { tag: 'legend', ...props },
-  ...children,
-);
+) =>
+  new ElementCreator<HTMLOptionElement>(
+    { tag: 'legend', ...props },
+    ...children,
+  );
 
 export const option = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLOptionElement>(
-  { tag: 'option', ...props },
-  ...children,
-);
+) =>
+  new ElementCreator<HTMLOptionElement>(
+    { tag: 'option', ...props },
+    ...children,
+  );
 
 export const paragraph = (
   props: ParamsTags,
@@ -73,13 +76,14 @@ export const paragraph = (
 export const select = (
   props: ParamsTags,
   ...children: (ElementCreator | HTMLElement | null)[]
-) => new ElementCreator<HTMLSelectElement>(
-  {
-    tag: 'select',
-    className: props.className,
-  },
-  ...children,
-);
+) =>
+  new ElementCreator<HTMLSelectElement>(
+    {
+      tag: 'select',
+      className: props.className,
+    },
+    ...children,
+  );
 
 export const ul = (
   props: ParamsTags,

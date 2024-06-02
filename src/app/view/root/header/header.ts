@@ -19,6 +19,8 @@ export default class Header extends ElementCreator {
 
   signupBtn: ElementCreator<HTMLElement>;
 
+  profileBtn: ElementCreator<HTMLElement>;
+
   constructor(routing: Router) {
     const logo = image({
       className: styles.logo,
@@ -60,6 +62,14 @@ export default class Header extends ElementCreator {
       className: styles.header__btn,
     });
 
+    const profileBtn = anchor({
+      txt: 'Profile',
+      onClick: () => {
+        this.routing.navigate('profile-page');
+      },
+      className: styles.header__btn,
+    });
+
     const signupBtn = anchor({
       txt: 'Sign Up',
       onClick: () => {
@@ -86,6 +96,7 @@ export default class Header extends ElementCreator {
       logo,
       navButtons,
       authButtons,
+      profileBtn,
     );
     super(
       {
@@ -99,6 +110,7 @@ export default class Header extends ElementCreator {
     this.loginBtn = loginBtn;
     this.logoutBtn = logoutBtn;
     this.mainBtn = mainBtn;
+    this.profileBtn = profileBtn;
     this.routing = routing;
     this.signupBtn = signupBtn;
   }

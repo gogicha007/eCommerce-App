@@ -1,0 +1,9 @@
+.header__btn {
+    color: var(--bg-color);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.header__btn:hover {
+    opacity: 70%;
+}

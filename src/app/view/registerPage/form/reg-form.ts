@@ -371,7 +371,8 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
     /* toggles the billing address fields require attr */
     this.billAddress.getElement().childNodes.forEach((item) => {
       const el = item;
-      if (el instanceof HTMLDivElement) (el.childNodes[0] as HTMLInputElement).required = bool;
+      if (el instanceof HTMLDivElement)
+        (el.childNodes[0] as HTMLInputElement).required = bool;
       if (el instanceof HTMLSelectElement) el.required = bool;
     });
   }
@@ -471,8 +472,9 @@ export default class RegForm extends ElementCreator<HTMLFormElement> {
       inputEl.errorElement.classList.add(styles.show);
     }
     const today = new Date();
-    const age = today.getFullYear()
-      - new Date(this.birthDate.inputField.value).getFullYear();
+    const age =
+      today.getFullYear() -
+      new Date(this.birthDate.inputField.value).getFullYear();
     const country = this.countryInput.getElement().value;
     const postalRegx = new RegExp(POSTALS[country][1]);
     const emailRegx = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;

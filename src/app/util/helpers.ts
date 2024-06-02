@@ -8,7 +8,8 @@ export const CountryList = () => {
   return list;
 };
 
-export const FormatPrice = (curr: string, price: number) => Intl.NumberFormat(undefined, {
-  style: 'currency',
-  currency: curr,
-}).format(price as number);
+export const FormatPrice = (curr: string, price: number) =>
+  Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: curr,
+  }).format(price as number);

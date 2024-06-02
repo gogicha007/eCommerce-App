@@ -6,13 +6,14 @@ interface PropsButton {
   className?: string;
 }
 
-const button = ({ txt, onClick, className }: PropsButton) => new ElementCreator({
-  tag: 'button',
-  className: `${className || ''}`,
-  onclick: () => {
-    onClick?.();
-  },
-  textContent: txt,
-});
+const button = ({ txt, onClick, className }: PropsButton) =>
+  new ElementCreator({
+    tag: 'button',
+    className: `${className || ''}`,
+    onclick: () => {
+      onClick?.();
+    },
+    textContent: txt,
+  });
 
 export default button;
