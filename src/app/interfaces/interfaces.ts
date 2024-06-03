@@ -77,3 +77,14 @@ export interface ITFProdQuery {
   results: any[];
   total: number;
 }
+
+export interface ITFInfoCutomer {
+  id: string;
+  email: string;
+  login: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: string;
+  password: string;
+}

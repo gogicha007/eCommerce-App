@@ -3,6 +3,7 @@ import {
   ITFCreateCustomer,
   ITFLoginData,
   ITFUpdateAddress,
+  // ITFInfoCutomer,
 } from '../interfaces/interfaces';
 
 export const getTokensByCredentials = async () => {
@@ -124,3 +125,24 @@ export const queryProductDiscounts = async (token: string) => {
   );
   return response;
 };
+
+// export const getInfoCustomer = async (data: ITFInfoCutomer) => {
+//   console.log(data);
+//   const response = await fetch(
+//     `${API_KEYS.CTP_API_URL}/${API_KEYS.CTP_PROJECT_KEY}/customers`,
+//     {
+//       method: 'POST',
+//       headers: {
+//         Authorization: `Bearer ${data.token}`,
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         email: data.login,
+//         firstName: data.firstName,
+//         lastName: data.lastName,
+//         password: data.password,
+//       }),
+//     },
+//   );
+//   return response;
+// };
